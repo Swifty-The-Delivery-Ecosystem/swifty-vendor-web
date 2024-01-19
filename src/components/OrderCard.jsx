@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 
 const OrderCard = (props) => {
-  const { removeOrder } = useContext(props.orderContext);
+  // const { removeOrder } = useContext(props.orderContext);
 
   const handleConfirm = () => {
     // Call the removeOrder function to remove the order from the context
-    removeOrder(props.orderId);
+    // removeOrder(props.orderId);
   };
 
   return (

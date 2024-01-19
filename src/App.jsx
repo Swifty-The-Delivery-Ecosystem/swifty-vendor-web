@@ -9,7 +9,6 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(faMagnifyingGlass, faRightFromBracket, faInstagram, faTwitter);
 
