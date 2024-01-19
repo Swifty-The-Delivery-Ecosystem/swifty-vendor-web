@@ -6,21 +6,18 @@ const Footer = () => {
   return (
     <footer className="bg-emerald-800 text-white pb-4">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="mt-8 flex space-x-4">
+        <div className="mt-4 flex space-x-4">
           <a href="#" className="hover:text-gray-300">
             Support
           </a>
         </div>
 
-        <p className="mt-8 text-gray-200 text-center">
+        <p className="mt-4 text-gray-200 text-center">
           &copy; 2024 Swifty Food Delivery. All rights reserved.
         </p>
 
-        <div className="mt-8 flex items-center">
+        <div className="mt-4 flex items-center">
           <p className="mr-4">Follow us:</p>
-          {/* <a href="#" className="text-white hover:text-gray-300">
-            <FontAwesomeIcon icon={faFacebookSquare} size="2x" />
-          </a> */}
           <a href="#" className="text-gray-200 hover:text-gray-300 ml-4">
             <FontAwesomeIcon icon={faTwitter} size="2x" />
           </a>

@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
+import React, { useState,useContext } from "react";
+import { NewOrderContext } from "../App";
 
 const OrderCard = (props) => {
-  // const { removeOrder } = useContext(props.orderContext);
 
-  const handleConfirm = () => {
-    // Call the removeOrder function to remove the order from the context
-    // removeOrder(props.orderId);
+  const {newOrders, setNewOrders} = useContext(NewOrderContext);
+
+  const removeOrder = (orderId) => {
+    console.log(orderId);
+    const updatedOrders = newOrders.filter((order) => order.orderId !== orderId);
+    setNewOrders(updatedOrders);
   };
 
   return (
@@ -20,7 +23,7 @@ const OrderCard = (props) => {
       <div className="mt-4 flex justify-between">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={handleConfirm}
+          onClick={()=>removeOrder(props.orderId)}
         >
           Confirm
         </button>

@@ -1,4 +1,4 @@
-const newOrders = [
+const ogOrders = [
   {
     itemName: "Pizza Margherita",
     quantity: 2,
@@ -71,4 +71,4 @@ const newOrders = [
   },
 ];
 
-export default newOrders;
+export default ogOrders;
