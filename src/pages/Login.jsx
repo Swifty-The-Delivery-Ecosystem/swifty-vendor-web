@@ -1,19 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // Add your login logic here
-    // For simplicity, let's check if both username and password are not empty
-    if (username && password) {
-      // Successful login
-      // Call the onLogin function passed as a prop to update the login status in the parent component
-      onLogin();
-    } else {
-      setError("Invalid username or password");
+  useEffect(() => {
+    if (localStorage.getItem("token") !== null) {
+      navigate("/");
+    }
+  });
+
+  const handleLogin = async () => {
+    try {
+      const response = await fetch(
+        "https://auth-swifty.vercel.app/api/v1/auth/vendors/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: username,
+            password: password,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        localStorage.setItem("token", data.data.token);
+        navigate("/");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "Invalid username or password");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setError("An error occurred during login");
     }
   };
 
@@ -25,7 +52,10 @@ const Login = ({ onLogin }) => {
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
         <div className="mb-4">
-          <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="username"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Username
           </label>
           <input
@@ -39,7 +69,10 @@ const Login = ({ onLogin }) => {
         </div>
 
         <div className="mb-6">
-          <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="password"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Password
           </label>
           <input

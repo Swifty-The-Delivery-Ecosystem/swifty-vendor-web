@@ -1,11 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { SearchContext } from "../App";
-import swiftyLogo from "../assets/swifty-white.png"; // Import the logo
+import {
+  faMagnifyingGlass,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
+import { useSearch } from "../context/searchContext";
+import swiftyLogo from "../assets/swifty-white.png";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-  const { search, setSearch } = useContext(SearchContext);
+  const { search, setSearch } = useSearch();
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     setSearch(e.target.value);
@@ -13,6 +18,12 @@ const NavBar = () => {
 
   const handleSearch = () => {
     setSearch("");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+
+    navigate("/login");
   };
 
   return (
@@ -34,11 +45,12 @@ const NavBar = () => {
           />
         </button>
       </div>
+      <img
+        src={swiftyLogo}
+        alt="Logo"
+        className="max-w-14 rounded-full shadow-md"
+      />
 
-      {/* Center Section - Logo */}
-      <img src={swiftyLogo} alt="Logo" className="max-w-14 rounded-full shadow-md" />
-
-      {/* Right Section - Navigation Links */}
       <div className="flex items-center">
         <a href="#" className="text-white mr-8 font-semibold">
           Home
@@ -49,9 +61,15 @@ const NavBar = () => {
         <a href="#" className="text-white mr-8 font-semibold">
           Support
         </a>
-        <a href="#" className="text-white mr-8 font-semibold">
-          <FontAwesomeIcon icon={faRightFromBracket} style={{ color: "white" }} />
-        </a>
+        <div
+          onClick={handleLogout}
+          className="text-white mr-8 cursor-pointer font-semibold"
+        >
+          <FontAwesomeIcon
+            icon={faRightFromBracket}
+            style={{ color: "white" }}
+          />
+        </div>
       </div>
     </nav>
   );

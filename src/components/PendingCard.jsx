@@ -1,6 +1,8 @@
 import React from "react";
+import { useOrders } from "../context/orderContext";
 
 const PendingCard = () => {
+  const { orders, setOrders } = useOrders();
   return (
     <div className="border-4 w-56 h-64 p-4 bg-white rounded-lg shadow-md">
       <div className="font-bold text-lg mb-2">Item Name</div>
