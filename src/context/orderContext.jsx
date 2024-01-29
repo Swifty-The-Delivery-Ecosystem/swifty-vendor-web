@@ -18,7 +18,7 @@ export const OrderProvider = ({ children }) => {
   const handleOrdersFetch = async() => {
     try{
       const response = await fetch(
-        "https://order-service-one.vercel.app/api/v1/order_service/vendor",
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor",
         {
           method: "GET",
           headers: {
@@ -36,7 +36,8 @@ export const OrderProvider = ({ children }) => {
       
     }
 }
-setInterval(handleOrdersFetch,10000);
+setInterval(handleOrdersFetch,100000);
+console.log(orders);
 // setTimeout(handleOrdersFetch, 10000);
   // handleOrdersFetch();
 
