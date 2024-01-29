@@ -36,7 +36,8 @@ export const OrderProvider = ({ children }) => {
       
     }
 }
-setTimeout(handleOrdersFetch, 10000);
+setInterval(handleOrdersFetch,10000);
+// setTimeout(handleOrdersFetch, 10000);
   // handleOrdersFetch();
 
   return (

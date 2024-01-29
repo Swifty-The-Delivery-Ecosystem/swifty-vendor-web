@@ -13,12 +13,12 @@ const OrderCard = (props) => {
     <div className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md">
       <div className="font-bold text-lg mb-2">{props.order._id}</div>
       <ul>
-      {/* {
+      {
         
       props.order.items.map((item)=>{
-          return <li>{item.name}</li>
+          return <li>{item._id}</li>
       })
-      } */}
+      }
       </ul>
       {/* <div className="text-gray-600">{props.quantity}</div>
       <div className="text-gray-600">{props._id}</div>
