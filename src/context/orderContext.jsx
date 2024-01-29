@@ -15,6 +15,30 @@ export const OrderProvider = ({ children }) => {
     setOrders
   };
 
+  const handleOrdersFetch = async() => {
+    try{
+      const response = await fetch(
+        "https://order-service-one.vercel.app/api/v1/order_service/vendor",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization" : "Bearer "+ localStorage.token,
+          },
+        }
+      );
+      
+      const result = await response.json();
+      console.log(result);
+      setOrders(result);
+    }
+    catch(e){
+      
+    }
+}
+setTimeout(handleOrdersFetch, 10000);
+  // handleOrdersFetch();
+
   return (
     <OrdersContext.Provider value={contextValue}>
       {children}

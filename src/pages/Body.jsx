@@ -18,23 +18,19 @@ const Body = () => {
 
       return filteredOrders.map((e) => (
         <OrderCard
-          itemName={e.itemName}
-          quantity={e.quantity}
-          deliveryLocation={e.deliveryLocation}
-          orderId={e.orderId}
-          timestamp={e.timestamp}
-          key={e.orderId}
+              order = {e}
+          // itemName={e.itemName}
+          // quantity={e.quantity}
+          // deliveryLocation={e.deliveryLocation}
+          // orderId={e.orderId}
+          // timestamp={e.timestamp}
+          // key={e.orderId}
         />
       ));
     } else {
       return orders.map((e) => (
         <OrderCard
-          itemName={e.itemName}
-          quantity={e.quantity}
-          deliveryLocation={e.deliveryLocation}
-          orderId={e.orderId}
-          timestamp={e.timestamp}
-          key={e.orderId}
+          order = {e}
         />
       ));
     }
