@@ -3,6 +3,7 @@ import OrderCard from "../components/OrderCard";
 import PendingCard from "../components/PendingCard";
 import { useSearch } from "../context/searchContext";
 import { useOrders } from "../context/orderContext";
+import { ShimmerSimpleGallery } from "react-shimmer-effects";
 
 const Body = () => {
   const { search, setSearch } = useSearch();
@@ -28,7 +29,7 @@ const Body = () => {
         />
       ));
     } else {
-      return orders.map((e) => <OrderCard order={e} />);
+      return <ShimmerSimpleGallery card imageHeight={200} caption />;
     }
   };
 
