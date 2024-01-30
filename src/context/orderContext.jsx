@@ -25,6 +25,7 @@ export const OrderProvider = ({ children }) => {
             "Content-Type": "application/json",
             "Authorization" : "Bearer "+ localStorage.token,
           },
+          // mode:'no-cors'
         }
       );
       
