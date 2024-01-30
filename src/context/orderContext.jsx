@@ -21,7 +21,7 @@ export const OrderProvider = ({ children }) => {
   const handleOrdersFetch = async () => {
     try {
       const response = await fetch(
-        "https://order-service-peach.vercel.app/api/v1/order_service/vendor",
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=pending",
         {
           method: "GET",
           headers: {
@@ -36,6 +36,26 @@ export const OrderProvider = ({ children }) => {
       setOrders(result);
     } catch (e) {}
   };
+
+  const handlePendingOrdersFetch = async () => {
+    try {
+      const response = await fetch(
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=Being%20Cooked",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        }
+      );
+
+      const result = await response.json();
+      console.log(result);
+      setPendingOrders(result);
+    } catch (e) {}
+  };
+
   const token = localStorage.getItem("token");
   //   handleOrdersFetch();
   // }, []);
@@ -47,6 +67,10 @@ export const OrderProvider = ({ children }) => {
   // setTimeout(handleOrdersFetch, 10000);
   useEffect(() => {
     handleOrdersFetch();
+  }, []);
+
+  useEffect(() => {
+    handlePendingOrdersFetch()
   }, []);
 
   return (
