@@ -3,7 +3,7 @@ import { useOrders } from "../context/orderContext";
 const OrderCard = (props) => {
   const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
   const removeOrder = async (order_id,newStatus) => {
-    // console.log(orderId);
+    console.log(order_id);
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     const response =await fetch(
       "https://order-service-one.vercel.app/api/v1/order_service/vendor/order_update",
