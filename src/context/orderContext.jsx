@@ -39,9 +39,12 @@ export const OrderProvider = ({ children }) => {
       
     }
 }
+const token = localStorage.getItem("token");
+if(token){
+  setInterval(handleOrdersFetch(),10000000);
+  console.log(orders);  
+}
 
-setInterval(handleOrdersFetch,100000);
-// console.log(orders);
 // setTimeout(handleOrdersFetch, 10000);
   // handleOrdersFetch();
 
