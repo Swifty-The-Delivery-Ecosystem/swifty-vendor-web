@@ -22,7 +22,7 @@ const Onboarding = () => {
     confirmPassword: '',
     location: '',
     phone: '',
-    supportedLocation: '',
+    unsupportedLocation: '',
   });
 
   const handleChange = (e) => {
@@ -35,14 +35,20 @@ const Onboarding = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(formData.password);
+    console.log(formData.confirmPassword);
 
-    // Check if password and confirm password match
     if (formData.password !== formData.confirmPassword) {
       alert('Password and Confirm Password do not match.');
       return;
     }
 
-    // Rest of your registration logic
+    fetch('https://auth-six-pi.vercel.app/api/v1/auth/vendors/register', { 
+      method: 'POST', 
+      mode: 'cors', 
+      body: JSON.stringify(formData)
+    })
+
     console.log('Form submitted:', formData);
   };
 
@@ -61,7 +67,7 @@ const Onboarding = () => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="ownerName"
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -72,9 +78,9 @@ const Onboarding = () => {
                 Owner's Contact No.
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="text"
+                id="text"
+                name="phone"
                 onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -88,7 +94,7 @@ const Onboarding = () => {
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="restaurantName"
                 onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -116,7 +122,7 @@ const Onboarding = () => {
               <input
                 type="password"
                 id="name"
-                name="name"
+                name="password"
                 onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -130,7 +136,7 @@ const Onboarding = () => {
               <input
                 type="password"
                 id="password"
-                name="password"
+                name="confirmPassword"
                 onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -142,9 +148,9 @@ const Onboarding = () => {
                 Registered Store Location
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="text"
+                id="location"
+                name="location"
                 onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
@@ -162,6 +168,7 @@ const Onboarding = () => {
                     onClick={toggleDropdown}
                     className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-700"
                     id="options-menu"
+                    name="unsupportedLocation"
                     aria-haspopup="true"
                     aria-expanded="true"
                   >
