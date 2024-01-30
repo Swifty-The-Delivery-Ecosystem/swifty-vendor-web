@@ -9,10 +9,13 @@ export const useOrders = () => {
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState(ogOrders);
+  const [pendingOrders, setPendingOrders]= useState([]);
 
   const contextValue = {
     orders,
-    setOrders
+    setOrders,
+    pendingOrders,
+    setPendingOrders
   };
 
   const handleOrdersFetch = async() => {
@@ -25,6 +28,7 @@ export const OrderProvider = ({ children }) => {
             "Content-Type": "application/json",
             "Authorization" : "Bearer "+ localStorage.token,
           },
+          // mode:'no-cors'
         }
       );
       

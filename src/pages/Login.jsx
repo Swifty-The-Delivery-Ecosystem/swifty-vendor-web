@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(
+      let response = await fetch(
         "https://auth-six-pi.vercel.app/api/v1/auth/vendors/login",
         {
           method: "POST",
