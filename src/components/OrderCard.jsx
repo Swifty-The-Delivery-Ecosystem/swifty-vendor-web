@@ -4,7 +4,7 @@ const OrderCard = (props) => {
   const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
 
   const removeOrder = (order_id) => {
-    // console.log(orderId);
+    console.log(order_id);
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     setOrders(updatedOrders);
     const updatedPendingOrder=orders.filter((order)=>order.orderId===order_id);

@@ -38,7 +38,7 @@ const Body = () => {
 
   return (
     <>
-      <div className="bg-green-100 px-10 flex divide-x divide-black divide-dashed">
+      <div className="bg-green-100 min-h-screen px-10 flex divide-x divide-black divide-dashed">
         <div className="my-4 w-1/2">
           <div className="py-4 px-10 font-bold text-2xl text-center">
             New Orders

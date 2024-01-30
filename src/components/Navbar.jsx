@@ -27,7 +27,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-emerald-800 p-4 flex items-center justify-between">
+    <nav className="bg-emerald-800 sticky top-0 p-4 flex items-center justify-between">
       {/* Left Section - Search */}
       <div className="flex items-center">
         <input
