@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import NavBar from "./components/Navbar";
 import Body from "./pages/Body";
 import Onboarding from "./pages/Onboarding";
+import AddItem from "./pages/AddItem";
 
 function App() {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<Body />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Onboarding />} />
+        <Route path="/add_items" element={<AddItem />} />
       </Routes>
     </div>
   );
