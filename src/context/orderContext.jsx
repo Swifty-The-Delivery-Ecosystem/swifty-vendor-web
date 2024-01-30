@@ -39,15 +39,15 @@ export const OrderProvider = ({ children }) => {
   const token = localStorage.getItem("token");
   //   handleOrdersFetch();
   // }, []);
-  if (token) {
-    setInterval(handleOrdersFetch, 5000);
-    console.log(orders);
-  }
+  // if (token) {
+  //   setInterval(handleOrdersFetch, 5000);
+  //   console.log(orders);
+  // }
 
   // setTimeout(handleOrdersFetch, 10000);
-  // useEffect(() => {
-  //   handleOrdersFetch();
-  // }, []);
+  useEffect(() => {
+    handleOrdersFetch();
+  }, []);
 
   return (
     <OrdersContext.Provider value={contextValue}>
