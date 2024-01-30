@@ -9,10 +9,13 @@ export const useOrders = () => {
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState(ogOrders);
+  const [pendingOrders, setPendingOrders]= useState([]);
 
   const contextValue = {
     orders,
-    setOrders
+    setOrders,
+    pendingOrders,
+    setPendingOrders
   };
 
   const handleOrdersFetch = async() => {
@@ -36,8 +39,9 @@ export const OrderProvider = ({ children }) => {
       
     }
 }
+
 setInterval(handleOrdersFetch,100000);
-console.log(orders);
+// console.log(orders);
 // setTimeout(handleOrdersFetch, 10000);
   // handleOrdersFetch();
 
