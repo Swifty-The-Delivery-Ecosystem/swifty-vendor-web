@@ -16,7 +16,7 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await fetch(
-        "https://auth-swifty.vercel.app/api/v1/auth/vendors/login",
+        "https://auth-six-pi.vercel.app/api/v1/auth/vendors/login",
         {
           method: "POST",
           headers: {
