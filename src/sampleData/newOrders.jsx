@@ -1,5 +1,8 @@
 const ogOrders = [
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Pizza Margherita",
     quantity: 2,
     deliveryLocation: "BH1",
@@ -7,6 +10,9 @@ const ogOrders = [
     timestamp: "2024-01-12 03:45 PM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Burger Combo",
     quantity: 1,
     deliveryLocation: "BH2",
@@ -14,6 +20,9 @@ const ogOrders = [
     timestamp: "2024-01-12 01:22 PM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Pasta Alfredo",
     quantity: 3,
     deliveryLocation: "BH3",
@@ -21,6 +30,9 @@ const ogOrders = [
     timestamp: "2024-01-12 11:10 AM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Sushi Platter",
     quantity: 2,
     deliveryLocation: "BH4",
@@ -28,6 +40,9 @@ const ogOrders = [
     timestamp: "2024-01-11 09:30 AM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Chicken Tikka Masala",
     quantity: 4,
     deliveryLocation: "BH5",
@@ -35,6 +50,9 @@ const ogOrders = [
     timestamp: "2024-01-11 07:15 AM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Vegetarian Stir-Fry",
     quantity: 1,
     deliveryLocation: "BH6",
@@ -42,6 +60,9 @@ const ogOrders = [
     timestamp: "2024-01-11 05:50 AM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Chocolate Fudge Cake",
     quantity: 1,
     deliveryLocation: "BH7",
@@ -49,6 +70,9 @@ const ogOrders = [
     timestamp: "2024-01-10 08:20 PM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Grilled Salmon",
     quantity: 2,
     deliveryLocation: "BH8",
@@ -56,6 +80,9 @@ const ogOrders = [
     timestamp: "2024-01-10 06:05 PM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Fruit Smoothie",
     quantity: 3,
     deliveryLocation: "BH9",
@@ -63,6 +90,9 @@ const ogOrders = [
     timestamp: "2024-01-10 03:40 PM",
   },
   {
+    items : [],
+    order_id:'',
+    amount : 100,
     itemName: "Caesar Salad",
     quantity: 1,
     deliveryLocation: "BH10",
