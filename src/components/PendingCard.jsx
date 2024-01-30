@@ -25,16 +25,54 @@
 
 import React, { useState, useContext } from "react";
 import { useOrders } from "../context/orderContext";
+import axios from "axios";
 
 const PendingCard = (props) => {
   const { pendingOrders, setPendingOrders } = useOrders();
+  console.log(props);
 
-  const removeOrder = (order_id) => {
-    // console.log(orderId);
-    const updatedOrders = pendingOrders.filter(
-      (order) => pendingOrders.order_id !== order_id
-    );
-    setPendingOrders(updatedOrders);
+  const removeOrder = async (order_id, newStatus) => {
+    console.log(order_id, newStatus);
+
+    try {
+      const response = await axios.put(
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor/order_update",
+        {
+          order_id: order_id,
+          status: newStatus,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        }
+      );
+
+      console.log(response);
+
+      if (response.status === 200 || response.status === 201) {
+        const updatedPendingOrders = pendingOrders.filter(
+          (order) => order.order_id !== order_id
+        );
+
+        setPendingOrders(updatedPendingOrders);
+
+        console.log(updatedPendingOrders);
+
+        // setOrders(updatedOrders);
+
+        // Additional logic based on newStatus if needed
+        // if (newStatus === "Being Cooked") {
+        //   // Handle Being Cooked status
+        // }
+
+        console.log(pendingOrders);
+      }
+    } catch (error) {
+      console.error("Error updating order:", error);
+      // Handle the error appropriately
+    }
   };
 
   return (
@@ -72,7 +110,7 @@ const PendingCard = (props) => {
       <div className="mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.orderId)}
+          onClick={() => removeOrder(props.order.order_id, "Departed")}
         >
           Out for Delivery
         </button>

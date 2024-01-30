@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import NavBar from "./components/Navbar";
 import Body from "./pages/Body";
+import Onboarding from "./pages/Onboarding";
 import AddItem from "./pages/AddItem";
 
 function App() {
@@ -23,9 +24,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Body />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Onboarding />} />
         <Route path="/add_items" element={<AddItem />} />
       </Routes>
-      </div>
+    </div>
   );
 }
 
