@@ -52,7 +52,7 @@ const OrderCard = (props) => {
       <div className="mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.order_id, 'Being Cooked')}
+          onClick={() => removeOrder(props.order.orderId, 'Being Cooked')}
         >
           Confirm
         </button>
