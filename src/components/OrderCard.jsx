@@ -3,7 +3,7 @@ import { useOrders } from "../context/orderContext";
 const OrderCard = (props) => {
   const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
   const removeOrder = async (order_id,newStatus) => {
-    console.log(order_id);
+    console.log(order_id,newStatus);
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     const response =await fetch(
       "https://order-service-one.vercel.app/api/v1/order_service/vendor/order_update",
@@ -52,12 +52,12 @@ const OrderCard = (props) => {
       <div className="mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.orderId, 'Being Cooked')}
+          onClick={() => removeOrder(props.order.order_id, 'Being Cooked')}
         >
           Confirm
         </button>
         <button className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                onClick={() => removeOrder(props.order.orderId,'Declined')}>
+                onClick={() => removeOrder(props.order.order_id,'Declined')}>
           Deny
         </button>
       </div>
