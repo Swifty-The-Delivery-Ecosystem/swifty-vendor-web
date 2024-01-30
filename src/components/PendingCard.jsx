@@ -31,26 +31,42 @@ const PendingCard = (props) => {
 
   const removeOrder = (order_id) => {
     // console.log(orderId);
-    const updatedOrders = orders.filter((order) => order.orderId !== order_id);
+    const updatedOrders = pendingOrders.filter(
+      (order) => pendingOrders.order_id !== order_id
+    );
     setPendingOrders(updatedOrders);
   };
 
   return (
     <div className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md py-auto content-center flex flex-col items-center justify-between ">
-      <ul>
-        {/* {
+      {/* <ul> */}
+      {/* {
         
       props.order.items.map((item)=>{
           return <li>{item._id}</li>
       })
       } */}
-      </ul>
+      {/* </ul>
       <div className="text-gray-600">
         {props.order.itemName} * {props.order.quantity}
       </div>
       <div className="text-gray-600">{props.order.deliveryLocation}</div>
       <div className="text-gray-600">{props.order.orderId}</div>
-      <div className="text-gray-600">{props.order.timestamp}</div>
+      <div className="text-gray-600">{props.order.timestamp}</div> */}
+
+      <div className="text-gray-600">Order ID : {props.order.order_id}</div>
+      <div className="text-gray-600">Amount : {props.order.amount}</div>
+      <ol>
+        {props.order.items.map((item) => {
+          return (
+            <li>
+              <div className="text-gray-600">
+                {item.name} * {item.quantity}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
 
       {/* Buttons */}
       <div className="mt-4 flex justify-between flex-col gap-2">

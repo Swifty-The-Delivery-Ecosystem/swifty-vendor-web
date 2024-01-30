@@ -33,6 +33,7 @@ const Body = () => {
   };
 
   const PendCards = () => {
+    console.log(pendingOrders);
     return pendingOrders.map((e) => <PendingCard order={e} />);
   };
 
@@ -57,4 +58,3 @@ const Body = () => {
 };
 
 export default Body;
- 
