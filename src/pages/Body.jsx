@@ -6,7 +6,7 @@ import { useOrders } from "../context/orderContext";
 
 const Body = () => {
   const { search, setSearch } = useSearch();
-  const { orders, setOrders } = useOrders();
+  const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
 
   const searchCards = () => {
     if (search !== "") {
@@ -18,7 +18,7 @@ const Body = () => {
 
       return filteredOrders.map((e) => (
         <OrderCard
-              order = {e}
+          order={e}
           // itemName={e.itemName}
           // quantity={e.quantity}
           // deliveryLocation={e.deliveryLocation}
@@ -28,12 +28,12 @@ const Body = () => {
         />
       ));
     } else {
-      return orders.map((e) => (
-        <OrderCard
-          order = {e}
-        />
-      ));
+      return orders.map((e) => <OrderCard order={e} />);
     }
+  };
+
+  const PendCards = () => {
+    return pendingOrders.map((e) => <PendingCard order={e} />);
   };
 
   return (
@@ -49,17 +49,7 @@ const Body = () => {
           <div className="py-4 px-10 font-bold text-2xl text-center">
             Pending Orders
           </div>
-          <div className="flex flex-wrap justify-center">
-            {Array(9)
-              .fill("")
-              .map(() => {
-                return (
-                  <div className="py-4 px-4">
-                    <PendingCard />
-                  </div>
-                );
-              })}
-          </div>
+          <div className="flex flex-wrap justify-center">{PendCards()}</div>
         </div>
       </div>
     </>
@@ -67,3 +57,4 @@ const Body = () => {
 };
 
 export default Body;
+ 

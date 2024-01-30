@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { useOrders } from "../context/orderContext";
 const OrderCard = (props) => {
-  const { orders, setOrders } = useOrders();
+  const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
 
   const removeOrder = (order_id) => {
     // console.log(orderId);
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     setOrders(updatedOrders);
+    const updatedPendingOrder=orders.filter((order)=>order.orderId===order_id);
+    setPendingOrders(...pendingOrders,updatedPendingOrder);
+    console.log(pendingOrders);
   };
 
   return (

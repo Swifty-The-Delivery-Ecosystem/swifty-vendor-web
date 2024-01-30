@@ -9,10 +9,13 @@ export const useOrders = () => {
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState(ogOrders);
+  const [pendingOrders, setPendingOrders]= useState([]);
 
   const contextValue = {
     orders,
-    setOrders
+    setOrders,
+    pendingOrders,
+    setPendingOrders
   };
 
   const handleOrdersFetch = async() => {
