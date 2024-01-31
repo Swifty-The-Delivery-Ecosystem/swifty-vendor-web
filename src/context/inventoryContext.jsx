@@ -27,9 +27,9 @@ export const InventoryProvider = ({ children }) => {
             //   mode: "no-cors"
             }
           );
-        console.log(response);
+        
         const data = await response.json();
-        console.log(data);
+        console.log(data.items);
         setInventory(data.items);
       } catch (error) {
         // Handle the error
@@ -50,10 +50,14 @@ export const InventoryProvider = ({ children }) => {
 
   const updateInventoryItem = async (itemId, updatedItem) => {
     try {
+        console.log(updatedItem);
       const response = await axios.put(`https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems/${itemId}`, updatedItem);
-      const updatedInventory = inventory.map(item => (item.id === itemId ? response.data : item));
+      console.log(response);
+      const data = await response.json();
+      const updatedInventory = inventory.map(item => (item._id === itemId ? data : item));
       setInventory(updatedInventory);
     } catch (error) {
+        console.log('Again');
       // Handle the error
     }
   };

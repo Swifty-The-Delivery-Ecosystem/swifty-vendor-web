@@ -10,6 +10,9 @@ const Body = () => {
   const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
 
   const searchCards = () => {
+    if(orders.length >0 && orders[0].amount == -25){
+      return <ShimmerSimpleGallery card imageHeight={200} caption />;
+    }
     if (search !== "") {
       const filteredOrders = orders.filter(
         (order) =>
@@ -29,12 +32,13 @@ const Body = () => {
         />
       ));
     } else {
-      return <ShimmerSimpleGallery card imageHeight={200} caption />;
+      return orders.map((e)=> <OrderCard order={e}/>);
     }
   };
 
   const PendCards = () => {
     console.log(pendingOrders);
+    
     return pendingOrders.map((e) => <PendingCard order={e} />);
   };
 

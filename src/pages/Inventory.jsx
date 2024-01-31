@@ -9,7 +9,7 @@ const InventoryPage = () => {
   return (
     <div className="flex items-center justify-center">
       {inventory.map(item => (
-        <InventoryCard key={item.id} item={item} />
+        <InventoryCard key={item._id} item={item} />
       ))}
     </div>
   );
