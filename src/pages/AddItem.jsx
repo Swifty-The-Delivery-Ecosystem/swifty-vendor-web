@@ -14,13 +14,15 @@ const AddItem = () => {
 
   const handleSubmit = async() => {
     try {
+      const token = localStorage.getItem('token');
       console.log(itemName)
       let response = await fetch(
-        "https://auth-six-pi.vercel.app/api/v1/inventory/vendor/menuitems",
+        "http://127.0.0.1:4005/api/v1/inventory/vendor/menuitems",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " +  token
           },
           body: JSON.stringify({
             name:itemName,
@@ -39,18 +41,19 @@ const AddItem = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(response)
+        console.log(data);
       } else {
         const errorData = await response.json();
         setError(errorData.error);
       }
     } catch (error) {
-      setError("An error occurred");
+      console.log(error);
+      // setError("An error occurred");
     }
   }
   return (
-    <div className="flex items-center justify-center h-screen bg-green-100">
-      <div className="bg-white p-8 rounded shadow-md">
+    <div className="flex items-center justify-center my-20 h-screen bg-green-100">
+      <div className="bg-white p-8 rounded shadow-md my-20">
         
         <div className="mb-4">
           <label
@@ -203,7 +206,7 @@ const AddItem = () => {
 
        <button
           className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600"
-          //  onClick={handleSubmit}
+           onClick={handleSubmit}
         >
           Add Item
         </button>

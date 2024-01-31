@@ -41,7 +41,13 @@ export const InventoryProvider = ({ children }) => {
 
   const createInventoryItem = async (newItem) => {
     try {
-      const response = await axios.post("https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems", newItem);
+      const response = await axios.post("https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems", {
+        body: JSON.stringify(newItem),
+         headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+        }
+    });
       setInventory([...inventory, response.data]);
     } catch (error) {
       // Handle the error
@@ -51,9 +57,8 @@ export const InventoryProvider = ({ children }) => {
   const updateInventoryItem = async (itemId, updatedItem) => {
     const token = localStorage.getItem("token");
     try {
-        console.log(updatedItem);
-        console.log(JSON.stringify(updatedItem));
-      const response = await fetch(`https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems`, { 
+   
+      const response = await fetch(`https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems?id=${updatedItem.item_id}`, { 
         method: "PUT",
     params : {
         id : updatedItem.item_id
@@ -63,9 +68,9 @@ export const InventoryProvider = ({ children }) => {
         Authorization: "Bearer " + token,
     },
       body:JSON.stringify(updatedItem)});
-      console.log(response);
+      
       const data = await response.json();
-      const updatedInventory = inventory.map(item => (item._id === itemId ? data : item));
+      const updatedInventory = inventory.map(item => (item.item_id === itemId ? data : item));
       setInventory(updatedInventory);
     } catch (error) {
         console.log(error);

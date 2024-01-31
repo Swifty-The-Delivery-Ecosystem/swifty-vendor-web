@@ -60,7 +60,7 @@ const InventoryCard = ({ item }) => {
             <div className="flex flex-col flex-1 px-1">
                 {/* <div className="text-gray-600">{item.rating} </div> */}
                 <button className={`relative w-14 h-8 rounded-full bg-gray-300 p-1 ${item.is_available ? 'bg-green-500' : ''}`}>
-                    <span className={`absolute w-6 h-6 bg-white rounded-full ${item.is_available ? 'transform translate-x-6 -translate-y-1/2 -translate-x-6' : '-translate-y-1/2 -translate-x-6'}`}></span>
+                    <span className={`absolute w-6 h-6 bg-white rounded-full ${item.is_available ? 'transform translate-x-0 -translate-y-1/2 -translate-x-6' : '-translate-y-1/2 -translate-x-6'}`}></span>
                 </button>
                 <button className="bg-blue-500 text-white px-4 py-2 rounded-md my-4" onClick={openModal}> <FaPencilAlt /> Edit</button>
             </div>
