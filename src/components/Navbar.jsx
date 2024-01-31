@@ -52,11 +52,11 @@ const NavBar = () => {
       />
 
       <div className="flex items-center">
-        <a href="#" className="text-white mr-8 font-semibold">
+        <a href="/" className="text-white mr-8 font-semibold">
           Home
         </a>
-        <a href="#" className="text-white mr-8 font-semibold">
-          Analytics
+        <a href="/inventory" className="text-white mr-8 font-semibold">
+         Inventory
         </a>
         <a href="#" className="text-white mr-8 font-semibold">
           Support

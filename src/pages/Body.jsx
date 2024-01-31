@@ -3,12 +3,16 @@ import OrderCard from "../components/OrderCard";
 import PendingCard from "../components/PendingCard";
 import { useSearch } from "../context/searchContext";
 import { useOrders } from "../context/orderContext";
+import { ShimmerSimpleGallery } from "react-shimmer-effects";
 
 const Body = () => {
   const { search, setSearch } = useSearch();
   const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
 
   const searchCards = () => {
+    if(orders.length >0 && orders[0].amount == -25){
+      return <ShimmerSimpleGallery card imageHeight={200} caption />;
+    }
     if (search !== "") {
       const filteredOrders = orders.filter(
         (order) =>
@@ -34,6 +38,7 @@ const Body = () => {
 
   const PendCards = () => {
     console.log(pendingOrders);
+    
     return pendingOrders.map((e) => <PendingCard order={e} />);
   };
 

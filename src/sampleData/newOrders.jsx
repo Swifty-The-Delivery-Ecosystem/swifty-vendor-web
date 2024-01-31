@@ -2,7 +2,7 @@ const ogOrders = [
   {
     items : [],
     order_id:'',
-    amount : 100,
+    amount : -25,
     itemName: "Pizza Margherita",
     quantity: 2,
     deliveryLocation: "BH1",

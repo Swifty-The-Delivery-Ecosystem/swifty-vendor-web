@@ -6,15 +6,18 @@ import App from "./App";
 import { BrowserRouter } from 'react-router-dom';
 import { OrderProvider } from "./context/orderContext";
 import { SearchProvider } from "./context/searchContext";
+import { InventoryProvider } from "./context/inventoryContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
     <OrderProvider>
+      <InventoryProvider>
       <SearchProvider>
         <App/>
       </SearchProvider>
+      </InventoryProvider>
     </OrderProvider>
     </BrowserRouter>
   </React.StrictMode>
