@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Onboarding = () => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const options = ["Kanhar", "Indravati", "MSH", "Mess Block", "Delta"];
@@ -15,14 +18,15 @@ const Onboarding = () => {
   };
 
   const [formData, setFormData] = useState({
-    email: '',
-    ownerName: '',
-    restaurantName: '',
-    password: '',
-    confirmPassword: '',
-    location: '',
-    phone: '',
-    unsupportedLocation: '',
+    email: "adityasererdyuidfsds@iitbhilai.ac.in",
+    ownerName: "adismort",
+    restaurantName: "adiStore",
+    password: "bt",
+    confirmPassword: "bt",
+    location: 1,
+    phone: "8369504378",
+    unsupportedLocation: "",
+    supported_location: [1, 2],
   });
 
   const handleChange = (e) => {
@@ -33,23 +37,40 @@ const Onboarding = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData.password);
     console.log(formData.confirmPassword);
 
     if (formData.password !== formData.confirmPassword) {
-      alert('Password and Confirm Password do not match.');
+      alert("Password and Confirm Password do not match.");
       return;
     }
 
-    fetch('https://auth-six-pi.vercel.app/api/v1/auth/vendors/register', { 
-      method: 'POST', 
-      mode: 'cors', 
-      body: JSON.stringify(formData)
-    })
+    const response = await fetch(
+      "https://auth-six-pi.vercel.app/api/v1/auth/vendors/register",
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
 
-    console.log('Form submitted:', formData);
+    const data = await response.json();
+    console.log(data);
+
+    if (response.ok) {
+      // Navigate to the login page upon successful registration
+      navigate("/login");
+    } else {
+      // Handle registration error
+      alert("Registration failed. Please try again.");
+    }
+
+    console.log("Form submitted:", formData);
   };
 
   return (
@@ -81,7 +102,7 @@ const Onboarding = () => {
                 type="text"
                 id="text"
                 name="phone"
-                onChange={handleChange}
+                // onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -144,14 +165,17 @@ const Onboarding = () => {
           </div>
           <div className="p-2 w-1/2">
             <div className="relative">
-              <label for="email" className="leading-7 text-base text-black mb-2">
+              <label
+                for="email"
+                className="leading-7 text-base text-black mb-2"
+              >
                 Registered Store Location
               </label>
               <input
                 type="text"
                 id="location"
                 name="location"
-                onChange={handleChange}
+                // onChange={handleChange}
                 className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
@@ -213,12 +237,16 @@ const Onboarding = () => {
                 </div>
               )}
             </div>
-          </div>
-
+          </div>{" "}
           <div className="p-2 w-full mt-8">
-            <button className="flex mx-auto text-white bg-emerald-700 border-0 py-2 px-8 focus:outline-none hover:bg-emerald-800 rounded text-lg" onClick={handleSubmit}>
+            {/* <Link to="/login"> */}
+            <button
+              className="flex mx-auto text-white bg-emerald-700 border-0 py-2 px-8 focus:outline-none hover:bg-emerald-800 rounded text-lg"
+              onClick={handleSubmit}
+            >
               Register
             </button>
+            {/* </Link> */}
           </div>
         </div>
       </div>
