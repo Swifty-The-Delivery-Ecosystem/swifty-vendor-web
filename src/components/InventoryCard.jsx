@@ -21,12 +21,187 @@ const UpdateItemModal = ({ item, isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}>
-      <h2>Update Item</h2>
+      {/* <h2>Update Item</h2>
       <input type="text" name="name" value={updatedFields.name} onChange={handleChange} />
       <input type="text" name="description" value={updatedFields.description} onChange={handleChange} />
       
       <button onClick={handleUpdate}>Update</button>
-      <button onClick={onClose}>Cancel</button>
+      <button onClick={onClose}>Cancel</button> */}
+       <div className="bg-white p-8 rounded shadow-md my-20">
+        
+        <div className="mb-4">
+          <label
+            htmlFor="name"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Item Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+            value={updatedFields.name}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label
+            htmlFor="price"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Price
+          </label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+            value={updatedFields.price}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="mb-6">
+      <label htmlFor="type" className="block text-gray-700 text-sm font-bold mb-2">
+        Type
+      </label>
+      <select
+        id="type"
+        className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+        name="is_veg"
+        value={updatedFields.is_veg}
+        onChange={handleChange}
+      >
+        <option value="">Select...</option>
+        <option value={0}>Veg</option>
+        <option value={1}>Non-Veg</option>
+      </select>
+    </div>
+    
+    <div className="mb-6">
+    <label
+            htmlFor="quantity"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Quantity
+          </label>
+          <input
+            type="number"
+            id="quantity"
+            name="quantity"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+            value={updatedFields.quantity}
+            onChange={handleChange}
+          />
+          </div>
+
+
+    <div className="mb-6">
+    <label
+            htmlFor="description"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Description
+          </label>
+          <input
+            type="text"
+            id="description"
+            name="description"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+            value={updatedFields.description}
+            onChange={handleChange}
+          />
+          </div>
+
+          <div className="mb-6">
+    <label
+            htmlFor="imageURL"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
+            Image URL
+          </label>
+          <input
+            type="text"
+            id="imageURL"
+            name="image_url"
+            className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+            value={updatedFields.image_url}
+            onChange={handleChange}
+          />
+          </div>
+          
+          <div className="mb-6">
+      <label htmlFor="tags" className="block text-gray-700 text-sm font-bold mb-2">
+        Tags
+      </label>
+      <select
+        id="tags"
+        className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+        value={updatedFields.tags}
+        name="tags"
+        onChange={handleChange}
+      >
+        <option value="">Select...</option>
+        <option value="Pizza">Pizza</option>
+        <option value="Paratha">Paratha</option>
+        <option value="Biryani">Biryani</option>
+        <option value="Rolls">Rolls</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Sandwich">Sandwich</option>
+      </select>
+    </div>
+
+    <div className="mb-6">
+      <label htmlFor="availability" className="block text-gray-700 text-sm font-bold mb-2">
+        Available
+      </label>
+      <select
+        id="availability"
+        name="availability"
+        className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+        value={updatedFields.is_available}
+        onChange={handleChange}
+      >
+        <option value="">Select...</option>
+        <option value={1}>Yes</option>
+        <option value={0}>No</option>
+      </select>
+    </div>
+    <div className="mb-6">
+      <label htmlFor="is_healthy" className="block text-gray-700 text-sm font-bold mb-2">
+        Is Healthy
+      </label>
+      <select
+        id="is_healthy"
+        ame="is_healthy"
+        className="w-full px-3 py-2 border rounded focus:outline-none focus:border-green-500"
+        value={updatedFields.is_healthy}
+        onChange={handleChange}
+      >
+        <option value="">Select...</option>
+        <option value={1}>Yes</option>
+        <option value={0}>No</option>
+      </select>
+    </div>
+
+    <div>
+  <button
+    className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600 mr-4"
+    onClick={handleUpdate}
+  >
+    Update Item
+  </button>
+  <button
+    className="bg-red-800 text-white px-4 py-2 rounded hover:bg-red-600"
+    onClick={onClose}
+  >
+    Discard
+  </button>
+</div>
+
+      </div>
     </Modal>
   );
 };
