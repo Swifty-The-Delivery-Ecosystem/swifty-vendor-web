@@ -10,7 +10,7 @@ const UpdateItemModal = ({ item, isOpen, onClose }) => {
   const [updatedFields, setUpdatedFields] = useState({ ...item });
 
   const handleUpdate = () => {
-    updateInventoryItem(item._id, updatedFields);
+    updateInventoryItem(item.item_id, updatedFields);
     onClose();
   };
 
