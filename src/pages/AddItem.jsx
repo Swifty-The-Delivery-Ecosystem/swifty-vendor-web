@@ -1,7 +1,10 @@
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const AddItem = () => {
+  
+  const navigate = useNavigate();
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState();
   const [is_veg, setIsVeg] = useState(1);
@@ -13,6 +16,7 @@ const AddItem = () => {
   const [is_healthy, setIsHealthy] = useState(0);
 
   const handleSubmit = async() => {
+    
     try {
       const token = localStorage.getItem('token');
       console.log(itemName)
@@ -42,6 +46,8 @@ const AddItem = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
+        
+        navigate('/inventory'); 
       } else {
         const errorData = await response.json();
         setError(errorData.error);
