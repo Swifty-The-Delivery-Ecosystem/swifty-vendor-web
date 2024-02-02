@@ -32,7 +32,7 @@ const Body = () => {
         />
       ));
     } else {
-      return orders.map((e)=> <OrderCard order={e}/>);
+      return orders.map((e) => <OrderCard order={e} />);
     }
   };
 

@@ -60,18 +60,25 @@ export const OrderProvider = ({ children }) => {
   //   handleOrdersFetch();
   // }, []);
   // if (token) {
-  //   setInterval(handleOrdersFetch, 5000);
+  //   setInterval(() => {
+  //     handleOrdersFetch();
+  //   }, 5000);
   //   console.log(orders);
   // }
 
   // setTimeout(handleOrdersFetch, 10000);
   useEffect(() => {
-    handleOrdersFetch();
+    setInterval(() => {
+      handleOrdersFetch();
+      handlePendingOrdersFetch();
+    }, 2000);
+
+    // handleOrdersFetch();
   }, []);
 
-  useEffect(() => {
-    handlePendingOrdersFetch()
-  }, []);
+  // useEffect(() => {
+  //   handlePendingOrdersFetch();
+  // }, []);
 
   return (
     <OrdersContext.Provider value={contextValue}>
