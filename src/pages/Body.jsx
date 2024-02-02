@@ -23,12 +23,12 @@ const Body = () => {
       return filteredOrders.map((e) => (
         <OrderCard
           order={e}
-          // itemName={e.itemName}
-          // quantity={e.quantity}
-          // deliveryLocation={e.deliveryLocation}
-          // orderId={e.orderId}
-          // timestamp={e.timestamp}
-          // key={e.orderId}
+          itemName={e.itemName}
+          quantity={e.quantity}
+          deliveryLocation={e.deliveryLocation}
+          orderId={e.orderId}
+          timestamp={e.timestamp}
+          key={e.orderId}
         />
       ));
     } else {

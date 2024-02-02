@@ -6,6 +6,7 @@ import NavBar from "./components/Navbar";
 import Body from "./pages/Body";
 import Onboarding from "./pages/Onboarding";
 import AddItem from "./pages/AddItem";
+import DeliveryPartnerPage from "./pages/DeliveryPartner";
 import InventoryPage from "./pages/Inventory";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<Onboarding />} />
         <Route path="/add_items" element={<AddItem />} />
         <Route path="/inventory" element={<InventoryPage />} />
+        <Route path="/delivery_partner" element={< DeliveryPartnerPage/>} />
       </Routes>
     </div>
   );

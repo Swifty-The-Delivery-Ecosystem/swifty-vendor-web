@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { OrderProvider } from "./context/orderContext";
 import { SearchProvider } from "./context/searchContext";
 import { InventoryProvider } from "./context/inventoryContext";
+import { DeliveryProvider } from "./context/deliveryPartnerContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,9 +15,11 @@ root.render(
     <BrowserRouter>
     <OrderProvider>
       <InventoryProvider>
+        <DeliveryProvider>
       <SearchProvider>
         <App/>
       </SearchProvider>
+      </DeliveryProvider>
       </InventoryProvider>
     </OrderProvider>
     </BrowserRouter>
