@@ -51,30 +51,32 @@ export const DeliveryProvider = ({ children }) => {
         }
     });
  const data = await response.json()
-    console.log(data);
-      setDelivery([...delivery,data.deliveryPartner]);
+    console.log(data.data);
+      setDelivery([...delivery,data.data.deliveryPartner]);
     } catch (error) {
       // Handle the error
       console.log(error)
     }
   };
 
-  const updateDeliveryPartner = async (itemId, updatedItem) => {
+  const updateDeliveryPartner = async (deliveryPartner_id,name) => {
     const token = localStorage.getItem("token");
     try {
-   
-      const response = await fetch("http://localhost:8000/api/v1/auth/vendors/delivery_partner_update", { 
+      console.log(deliveryPartner_id,name.name)
+      const response = await fetch("http://localhost:8000/api/v1/auth/vendors/update/delivery_partner_update", { 
         method: "PUT",
    
     headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token,
     },
-      body:JSON.stringify(updatedItem)});
+      body:JSON.stringify({deliveryPartner_id:name._id,name:name.name})});
       
       const data = await response.json();
-      const updatedInventory = inventory.map(item => (item.item_id === itemId ? data : item));
-      setDelivery(updatedInventory);
+      console.log(data);
+      const updatedPartner = delivery.map(item => (item._id === name._id ? data.updateDeliveryPartner : item));
+      console.log(updatedPartner)
+      setDelivery(updatedPartner);
     } catch (error) {
         console.log(error);
       // Handle the error

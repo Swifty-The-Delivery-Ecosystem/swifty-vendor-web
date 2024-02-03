@@ -5,18 +5,18 @@ import { useDelivery } from "../context/deliveryPartnerContext";
 
 
 const UpdateModal = ({ deliveryPartner, isOpen, onClose }) => {
-  const { createDeliveryPartner } = useDelivery();
+  const { updateDeliveryPartner } = useDelivery();
   const [addFields, setAddFields] = useState({ ...deliveryPartner });
 
   const handleAdd = () => {
-  createDeliveryPartner(deliveryPartner.deliveryPartner_id, addFields);
+    updateDeliveryPartner(deliveryPartner._id, addFields);
     onClose();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // setAddFields({ ...deliveryPartner, [name]: value });
-    console.log(name)
+    // setAddFields({ ...addFields, [name]: value });
+    // console.log(name)
     setAddFields((prevFields) => ({
         ...prevFields,
         [name]: value,
