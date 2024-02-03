@@ -58,8 +58,8 @@ const NavBar = () => {
         <a href="/inventory" className="text-white mr-8 font-semibold">
          Inventory
         </a>
-        <a href="#" className="text-white mr-8 font-semibold">
-          Support
+        <a href="/delivery_partner" className="text-white mr-8 font-semibold">
+          Delivery Partner
         </a>
         <div
           onClick={handleLogout}
