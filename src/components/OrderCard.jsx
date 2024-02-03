@@ -2,12 +2,15 @@ import React, { useState, useContext } from "react";
 // import { useOrders } from "../context/orderContext";
 import { OrdersContext } from "../context/orderContext";
 
-
 const OrderCard = (props) => {
   // const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
-  const { orders, setOrders, pendingOrders, setPendingOrders } = useContext(OrdersContext);
+  const { orders, setOrders, pendingOrders, setPendingOrders } =
+    useContext(OrdersContext);
+  const [loading, setLoading] = useState(false);
 
   const removeOrder = async (order_id, newStatus) => {
+    setLoading(true);
+
     // console.log(orderId);
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     const response = await fetch(
@@ -31,8 +34,9 @@ const OrderCard = (props) => {
         (order) => order.orderId === order_id
       );
       setPendingOrders(...pendingOrders, updatedPendingOrder);
-      console.log(pendingOrders);
+      console.log("pendingOrders", pendingOrders);
     }
+    setLoading(false);
   };
 
   return (
@@ -42,14 +46,20 @@ const OrderCard = (props) => {
           return (
             <li key={index}>
               <div className="text-gray-600">
-                <span className="font-bold">{item.name} * {item.quantity}</span>
+                <span className="font-bold">
+                  {item.name} * {item.quantity}
+                </span>
               </div>
             </li>
           );
         })}
       </ol>
-      <div className="text-gray-600"><span className="font-bold">Amount :</span> {props.order.amount}</div>
-      <div className="text-gray-600"><span className="font-bold">Order ID :</span> {props.order.order_id}</div>
+      <div className="text-gray-600">
+        <span className="font-bold">Amount :</span> {props.order.amount}
+      </div>
+      <div className="text-gray-600">
+        <span className="font-bold">Order ID :</span> {props.order.order_id}
+      </div>
 
       {/* <div className="text-gray-600">{props.order.itemName}  * {props.order.quantity}</div>
       <div className="text-gray-600">{props.order.deliveryLocation}</div> */}
@@ -57,20 +67,24 @@ const OrderCard = (props) => {
       {/* <div className="text-gray-600">{props.order.timestamp}</div> */}
 
       {/* Buttons */}
-      <div className="mt-4 flex justify-between flex-col gap-2">
-        <button
-          className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.order_id, "Being Cooked")}
-        >
-          Confirm
-        </button>
-        <button
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-          onClick={() => removeOrder(props.order.orderId, "Declined")}
-        >
-          Deny
-        </button>
-      </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="mt-4 flex justify-between flex-col gap-2">
+          <button
+            className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
+            onClick={() => removeOrder(props.order.order_id, "being cooked")}
+          >
+            Confirm
+          </button>
+          <button
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onClick={() => removeOrder(props.order.orderId, "declined")}
+          >
+            Deny
+          </button>
+        </div>
+      )}
     </div>
   );
 };

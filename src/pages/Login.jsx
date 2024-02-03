@@ -45,7 +45,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-green-100">
+    <div className="flex md:mx-0 mx-2 items-center min-h-screen overflow-y-hidden justify-center bg-green-100">
       <div className="bg-white p-8 rounded shadow-md">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
 
@@ -84,18 +84,19 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-
-        <button
-          className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600"
-          onClick={handleLogin}
-        >
-          Login
-        </button>
-        <a href="/register">
-          <button className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600">
-            SignUp
+        <div className="mx-auto flex justify-center gap-6 content-center">
+          <button
+            className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600"
+            onClick={handleLogin}
+          >
+            Login
           </button>
-        </a>
+          <a href="/register">
+            <button className="bg-emerald-800 text-white px-4 py-2 rounded hover:bg-green-600">
+              SignUp
+            </button>
+          </a>
+        </div>
       </div>
     </div>
   );
