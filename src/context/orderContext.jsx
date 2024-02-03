@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import ogOrders from "../sampleData/newOrders";
 
-const OrdersContext = createContext();
+export const OrdersContext = createContext();
 
-export const useOrders = () => {
-  return useContext(OrdersContext);
-};
+// export const useOrders = () => {
+//   return useContext(OrdersContext);
+// };
 
 export const OrderProvider = ({ children }) => {
-  const [orders, setOrders] = useState(ogOrders);
+  const [orders, setOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
 
   const contextValue = {
@@ -57,28 +56,15 @@ export const OrderProvider = ({ children }) => {
   };
 
   const token = localStorage.getItem("token");
-  //   handleOrdersFetch();
-  // }, []);
-  // if (token) {
-  //   setInterval(() => {
-  //     handleOrdersFetch();
-  //   }, 5000);
-  //   console.log(orders);
-  // }
 
-  // setTimeout(handleOrdersFetch, 10000);
   useEffect(() => {
+    handleOrdersFetch();
+    handlePendingOrdersFetch();
     setInterval(() => {
       handleOrdersFetch();
       handlePendingOrdersFetch();
-    }, 2000);
-
-    // handleOrdersFetch();
+    }, 20000);
   }, []);
-
-  // useEffect(() => {
-  //   handlePendingOrdersFetch();
-  // }, []);
 
   return (
     <OrdersContext.Provider value={contextValue}>
