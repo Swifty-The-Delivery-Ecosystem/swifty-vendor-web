@@ -4,12 +4,12 @@ import DeliveryPartnerCard from "../components/DeliveryPartnerCard";
 import AddDeliveryCard from "../components/AddDeliveryPartner";
 
 const DeliveryPartnerPage = () => {
-  const {delivery}  = useDelivery();
-  console.log(delivery)
+  const { delivery } = useDelivery();
+  console.log("delivery", delivery);
   return (
     <div className="flex items-center justify-center flex-col">
-      <AddDeliveryCard/>
-      { delivery.map((item) => (
+      <AddDeliveryCard />
+      {delivery.map((item) => (
         <DeliveryPartnerCard key={item._id} deliveryPartner={item} />
       ))}
     </div>

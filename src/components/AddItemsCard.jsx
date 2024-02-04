@@ -1,28 +1,45 @@
 import React, { useState } from "react";
-import { IoMdAdd } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { IoMdAdd } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { useInventory } from "../context/inventoryContext";
 
 const AddItemsCard = () => {
-    
-    const navigate = useNavigate();
-    const addItems = () => {
-        // Perform any necessary logic
-        console.log('Adding items...');
-        navigate('/add_items'); 
-      };
-    
+  const { inventory, setInventory } = useInventory();
+  const navigate = useNavigate();
 
-    return (
-        <div className="border-4 w-5/6 h-1/5 p-4 m-2 bg-white rounded-lg shadow-md py-auto flex flex-col divide-x divide-gray md:flex-row">
-        <div className="flex flex-col flex-1 px-1">
-          <button
-            className="bg-emerald-500 text-white px-4 py-2 rounded-md my-4"
-            onClick={addItems}
-          >
-            <IoMdAdd /> Add Items
-          </button>
-        </div>
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+
+    // Check if the search term is empty
+    if (value === "" || value.length === 0) {
+      // Reset the inventory to its original state
+      setInventory(inventory);
+    } else {
+      // Apply the filter and update the inventory
+      const filteredItems = inventory.filter((item) =>
+        item.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setInventory(filteredItems);
+    }
+  };
+
+  return (
+    <div className="w-1/2 my-4 flex justify-evenly">
+      <input
+        type="text"
+        placeholder="Search"
+        className="w-3/4 mx-2 my-3 bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        value={searchTerm}
+        onChange={(e) => handleSearch(e.target.value)}
+      />
+      <div className="w-fit my-2 cursor-pointer flex text-white items-center px-4 rounded-xl bg-emerald-500">
+        {" "}
+        <IoMdAdd /> Add Items
       </div>
-    );
+    </div>
+  );
 };
+
 export default AddItemsCard;

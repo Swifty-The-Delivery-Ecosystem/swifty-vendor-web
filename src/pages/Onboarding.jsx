@@ -11,11 +11,11 @@ const Onboarding = () => {
 
   const options = ["Kanhar", "Indravati", "MSH", "Mess Block", "Delta"];
   const locationMapping = {
-    "Kanhar": 1,
-    "Indravati": 2,
-    "MSH": 3,
+    Kanhar: 1,
+    Indravati: 2,
+    MSH: 3,
     "Mess Block": 4,
-    "Delta": 5,
+    Delta: 5,
   };
 
   const [imageUrls, setImageUrls] = useState([""]);
@@ -115,7 +115,7 @@ const Onboarding = () => {
     }
 
     const response = await fetch(
-      "http://localhost:5000/api/v1/auth/vendors/register",
+      "https://auth-six-pi.vercel.app/api/v1/auth/vendors/register",
       {
         method: "POST",
         mode: "cors",
