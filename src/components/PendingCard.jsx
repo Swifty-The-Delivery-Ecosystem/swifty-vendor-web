@@ -9,10 +9,33 @@ import { useDelivery } from "../context/deliveryPartnerContext";
 const PendingCard = (props) => {
   const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
   const delivery = useDelivery();
-  console.log("delivery", delivery.delivery);
+  const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState(null);
+
+  // console.log("delivery", delivery.delivery);
 
   const removeOrder = async (order_id, newStatus) => {
-    console.log(order_id, newStatus);
+    console.log(order_id, newStatus , selectedDeliveryBoy);
+    try {
+      const response = await fetch(
+        "https://order-service-peach.vercel.app/api/v1/order_service/delivery_boy",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+          body:JSON.stringify({
+            order_id: order_id,
+            delivery_partner_id: selectedDeliveryBoy.id,
+          }) 
+        }
+      );
+
+      const result = await response.json();
+      console.log(result)
+    } catch (e) {
+      console.error("Error fetching pending orders data:", e);
+    }
 
     try {
       const response = await axios.put(
@@ -47,6 +70,7 @@ const PendingCard = (props) => {
   const dropdownOptions = delivery.delivery.map((item) => ({
     label: item.name,
     value: item.otp,
+    id: item._id
   }));
 
   return (
@@ -73,6 +97,11 @@ const PendingCard = (props) => {
       <SimpleDropdown
         options={dropdownOptions}
         searchable
+        onChange={(value) => {
+          console.log(value)
+          setSelectedDeliveryBoy(value);
+
+        }}
         configs={{
           position: { y: "bottom", x: "center" },
           fullWidthParent: true,
@@ -82,7 +111,7 @@ const PendingCard = (props) => {
       <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.order_id, "Departed")}
+          onClick={() => removeOrder(props.order.order_id, "departed", selectedDeliveryBoy)}
         >
           Out for Delivery
         </button>
