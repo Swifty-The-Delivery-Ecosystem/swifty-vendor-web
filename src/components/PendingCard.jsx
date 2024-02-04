@@ -9,7 +9,7 @@ import { useDelivery } from "../context/deliveryPartnerContext";
 const PendingCard = (props) => {
   const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
   const delivery = useDelivery();
-  const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState(null);
+  const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState({label:"", value:0, id:"0"});
 
   // console.log("delivery", delivery.delivery);
 
@@ -53,6 +53,7 @@ const PendingCard = (props) => {
       );
 
       console.log(response);
+      setSelectedDeliveryBoy({label:"", value:0, id:"0"});
 
       if (response.status === 200 || response.status === 201) {
         const updatedPendingOrders = pendingOrders.filter(
@@ -100,7 +101,10 @@ const PendingCard = (props) => {
         onChange={(value) => {
           console.log(value)
           setSelectedDeliveryBoy(value);
-
+        }}
+        labels={{
+          selectedPrefix: `${selectedDeliveryBoy.label}`,
+          notSelected: `${selectedDeliveryBoy.label}`,
         }}
         configs={{
           position: { y: "bottom", x: "center" },
