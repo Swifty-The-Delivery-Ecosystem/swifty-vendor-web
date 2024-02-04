@@ -21,7 +21,7 @@ const AddItem = () => {
       const token = localStorage.getItem('token');
       console.log(itemName)
       let response = await fetch(
-        "hhttps://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems",
+        "https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems",
         {
           method: "POST",
           headers: {
