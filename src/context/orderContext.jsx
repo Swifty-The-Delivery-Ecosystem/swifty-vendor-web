@@ -1,10 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const OrdersContext = createContext();
-
-// export const useOrders = () => {
-//   return useContext(OrdersContext);
-// };
 
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
@@ -31,15 +27,20 @@ export const OrderProvider = ({ children }) => {
       );
 
       const result = await response.json();
-      console.log(result);
-      setOrders(result);
-    } catch (e) {}
+      if (Array.isArray(result)) {
+        setOrders(result);
+      } else {
+        console.error("Invalid data format for orders:", result);
+      }
+    } catch (e) {
+      console.error("Error fetching orders data:", e);
+    }
   };
 
   const handlePendingOrdersFetch = async () => {
     try {
       const response = await fetch(
-        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=Being%20Cooked",
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
         {
           method: "GET",
           headers: {
@@ -50,20 +51,34 @@ export const OrderProvider = ({ children }) => {
       );
 
       const result = await response.json();
-      console.log(result);
-      setPendingOrders(result);
-    } catch (e) {}
+      if (Array.isArray(result)) {
+        setPendingOrders(result);
+      } else {
+        console.error("Invalid data format for pending orders:", result);
+      }
+    } catch (e) {
+      console.error("Error fetching pending orders data:", e);
+    }
   };
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    handleOrdersFetch();
-    handlePendingOrdersFetch();
-    setInterval(() => {
-      handleOrdersFetch();
-      handlePendingOrdersFetch();
-    }, 20000);
+    // if (token) {
+      const ordersInterval = setInterval(() => {
+        handleOrdersFetch();
+      }, 5000);
+
+      const pendingOrdersInterval = setInterval(() => {
+        handlePendingOrdersFetch();
+      }, 5000);
+
+      // Clear intervals on component unmount
+      return () => {
+        clearInterval(ordersInterval);
+        clearInterval(pendingOrdersInterval);
+      };
+    // }
   }, []);
 
   return (

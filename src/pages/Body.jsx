@@ -15,6 +15,8 @@ const Body = () => {
     useContext(OrdersContext);
 
   const searchCards = () => {
+    console.log("These are the orders");
+    console.log(orders);
     if (orders.length > 0 && orders[0].amount == -25) {
       return <ShimmerSimpleGallery card imageHeight={200} caption />;
     }
@@ -40,23 +42,25 @@ const Body = () => {
         ))
       );
     } else {
-      return orders && orders.map((e) => <OrderCard order={e} />);
+      return orders.map((e) => <OrderCard order={e} />);
     }
   };
 
   const searchPendingCards = () => {
+    console.log("These are the pending orders");
+    console.log(pendingOrders);
+  
     if (pendingOrders.length > 0 && pendingOrders[0].amount == -25) {
       return <ShimmerSimpleGallery card imageHeight={200} caption />;
     }
+  
     if (search !== "") {
       const filteredOrders = pendingOrders.filter(
-        (pendingOrders) =>
-          pendingOrders.itemName.toLowerCase().includes(search.toLowerCase()) ||
-          pendingOrders.deliveryLocation
-            .toLowerCase()
-            .includes(search.toLowerCase())
+        (pendingOrder) =>
+          pendingOrder.itemName.toLowerCase().includes(search.toLowerCase()) ||
+          pendingOrder.deliveryLocation.toLowerCase().includes(search.toLowerCase())
       );
-
+  
       return (
         filteredOrders &&
         filteredOrders.map((e) => (
@@ -72,9 +76,12 @@ const Body = () => {
         ))
       );
     } else {
-      return pendingOrders && pendingOrders.map((e) => <PendingCard order={e} />);
+      return (
+        pendingOrders.map((e) => <PendingCard order={e} key={e.orderId} />)
+      );
     }
   };
+  
 
   // const PendCards = () => {
   //   console.log(pendingOrders);

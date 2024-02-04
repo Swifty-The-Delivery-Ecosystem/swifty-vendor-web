@@ -8,10 +8,39 @@ const OrderCard = (props) => {
     useContext(OrdersContext);
   const [loading, setLoading] = useState(false);
 
+  // const removeOrder = async (order_id, newStatus) => {
+  //   setLoading(true);
+
+  //   const updatedOrders = orders.filter((order) => order.order_id !== order_id);
+  //   const response = await fetch(
+  //     "https://order-service-one.vercel.app/api/v1/order_service/vendor/order_update",
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + localStorage.token,
+  //       },
+  //       body: JSON.stringify({
+  //         order_id: order_id,
+  //         status: newStatus,
+  //       }),
+  //     }
+  //   );
+  //   console.log(response);
+  //   if (response.status === 200 || 201) {
+  //     setOrders(updatedOrders);
+  //     const updatedPendingOrder = orders.filter(
+  //       (order) => order.orderId === order_id
+  //     );
+  //     setPendingOrders(...pendingOrders, updatedPendingOrder);
+  //     console.log("pendingOrders", pendingOrders);
+  //   }
+  //   setLoading(false);
+  // };
+
   const removeOrder = async (order_id, newStatus) => {
     setLoading(true);
-
-    // console.log(orderId);
+  
     const updatedOrders = orders.filter((order) => order.order_id !== order_id);
     const response = await fetch(
       "https://order-service-one.vercel.app/api/v1/order_service/vendor/order_update",
@@ -27,18 +56,23 @@ const OrderCard = (props) => {
         }),
       }
     );
+  
     console.log(response);
-    if (response.status === 200 || 201) {
+  
+    if (response.status === 200 || response.status === 201) {
       setOrders(updatedOrders);
+  
       const updatedPendingOrder = orders.filter(
-        (order) => order.orderId === order_id
+        (order) => order.order_id === order_id
       );
-      setPendingOrders(...pendingOrders, updatedPendingOrder);
+      setPendingOrders([...pendingOrders, ...updatedPendingOrder]);
       console.log("pendingOrders", pendingOrders);
     }
+  
     setLoading(false);
   };
 
+  
   return (
     <div className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md py-auto content-center  ">
       <ol>
