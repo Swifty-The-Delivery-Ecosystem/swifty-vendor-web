@@ -16,13 +16,13 @@ export const DeliveryProvider = ({ children }) => {
 
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/view",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
+             "https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/view",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
             //   mode: "no-cors"
           }
         );
@@ -42,7 +42,7 @@ export const DeliveryProvider = ({ children }) => {
     
     try {
         const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:8000/api/v1/auth/vendors/delivery_partner/register", {
+      const response = await fetch("https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/register", {
         method:"POST",
         body: JSON.stringify(newPartner),
          headers: {
@@ -63,7 +63,7 @@ export const DeliveryProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     try {
       console.log(deliveryPartner_id,name.name)
-      const response = await fetch("http://localhost:8000/api/v1/auth/vendors/update/delivery_partner_update", { 
+      const response = await fetch("https://auth-six-pi.vercel.app/api/v1/auth/vendors/update/delivery_partner_update", { 
         method: "PUT",
    
     headers: {
