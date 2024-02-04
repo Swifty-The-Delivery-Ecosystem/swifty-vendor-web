@@ -28,7 +28,10 @@ export const OrderProvider = ({ children }) => {
 
       const result = await response.json();
       if (Array.isArray(result)) {
-        setOrders(result);
+        if(result != orders){
+          setOrders(result);
+        }
+        
       } else {
         console.error("Invalid data format for orders:", result);
       }
@@ -52,7 +55,10 @@ export const OrderProvider = ({ children }) => {
 
       const result = await response.json();
       if (Array.isArray(result)) {
-        setPendingOrders(result);
+        console.log(result, "Rizzult \n",pendingOrders,"Damn \n", JSON.stringify(result) != JSON.stringify(pendingOrders));
+        if(JSON.stringify(result) != JSON.stringify(pendingOrders)){
+          setPendingOrders(result);
+        } 
       } else {
         console.error("Invalid data format for pending orders:", result);
       }
@@ -60,6 +66,10 @@ export const OrderProvider = ({ children }) => {
       console.error("Error fetching pending orders data:", e);
     }
   };
+
+  useEffect(() => {
+    handlePendingOrdersFetch();
+  })
 
   const token = localStorage.getItem("token");
 
@@ -69,14 +79,14 @@ export const OrderProvider = ({ children }) => {
         handleOrdersFetch();
       }, 5000);
 
-      const pendingOrdersInterval = setInterval(() => {
-        handlePendingOrdersFetch();
-      }, 5000);
+      // const pendingOrdersInterval = setInterval(() => {
+      //   handlePendingOrdersFetch();
+      // }, 5000);
 
       // Clear intervals on component unmount
       return () => {
         clearInterval(ordersInterval);
-        clearInterval(pendingOrdersInterval);
+        // clearInterval(pendingOrdersInterval);
       };
     // }
   }, []);

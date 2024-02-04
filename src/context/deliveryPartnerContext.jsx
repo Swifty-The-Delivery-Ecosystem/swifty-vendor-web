@@ -11,32 +11,31 @@ export const DeliveryProvider = ({ children }) => {
   const [delivery, setDelivery] = useState([]);
 
   useEffect(() => {
-    const fetchDelivery = async () => {
-      try {
-
-        const token = localStorage.getItem("token");
-        const response = await fetch(
-             "https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/view",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-              },
-            //   mode: "no-cors"
-          }
-        );
-        
-        const data = await response.json();
-        console.log(data.deliveryPartners);
-         setDelivery(data.deliveryPartners);
-      } catch (error) {
-        // Handle the error
-      }
-    };
-
     fetchDelivery();
   }, []);
+  const fetchDelivery = async () => {
+    try {
+
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+           "https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/view",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          //   mode: "no-cors"
+        }
+      );
+      
+      const data = await response.json();
+      console.log(data.deliveryPartners);
+       setDelivery(data.deliveryPartners);
+    } catch (error) {
+      // Handle the error
+    }
+  };
 
   const createDeliveryPartner = async (newPartner) => {
     
@@ -82,6 +81,26 @@ export const DeliveryProvider = ({ children }) => {
       // Handle the error
     }
   };
+
+  const updateOrderDeliveryPartner = async (order_id, deliveryPartner_id) => {
+    try {
+      const response = await fetch(
+        "https://order-service-peach.vercel.app/api/v1/order_service/delivery_boy",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        }
+      );
+
+      const result = await response.json();
+      console.log(result)
+    } catch (e) {
+      console.error("Error fetching pending orders data:", e);
+    }
+  }
 
   return (
     <DeliveryContext.Provider value={{ delivery, createDeliveryPartner, updateDeliveryPartner }}>
