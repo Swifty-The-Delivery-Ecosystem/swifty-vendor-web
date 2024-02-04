@@ -16,19 +16,19 @@ export const DeliveryProvider = ({ children }) => {
 
         const token = localStorage.getItem("token");
         const response = await fetch(
-             "http://localhost:8000/api/v1/auth/vendors/delivery_partner/view",
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: "Bearer " + token,
-              },
+          "https://auth-six-pi.vercel.app/api/v1/auth/vendors/delivery_partner/view",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
             //   mode: "no-cors"
-            }
-          );
+          }
+        );
         
         const data = await response.json();
-        // console.log(data.deliveryPartners);
+        console.log(data.deliveryPartners);
          setDelivery(data.deliveryPartners);
       } catch (error) {
         // Handle the error

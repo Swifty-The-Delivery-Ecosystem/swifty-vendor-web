@@ -1,13 +1,15 @@
 import React, { useState, useContext } from "react";
-// import { useOrders } from "../context/orderContext";
 import { OrdersContext } from "../context/orderContext";
+import { SimpleDropdown } from "react-js-dropdavn";
+import "react-js-dropdavn/dist/index.css";
 
 import axios from "axios";
+import { useDelivery } from "../context/deliveryPartnerContext";
 
 const PendingCard = (props) => {
-  // const { pendingOrders, setPendingOrders } = useOrders();
   const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
-  console.log(props);
+  const delivery = useDelivery();
+  console.log("delivery", delivery.delivery);
 
   const removeOrder = async (order_id, newStatus) => {
     console.log(order_id, newStatus);
@@ -35,15 +37,17 @@ const PendingCard = (props) => {
         );
 
         setPendingOrders(updatedPendingOrders);
-
-        // console.log(updatedPendingOrders);
-
-        // console.log(pendingOrders);
       }
     } catch (error) {
       console.error("Error updating order:", error);
     }
   };
+
+  // Transform delivery data to the desired format
+  const dropdownOptions = delivery.delivery.map((item) => ({
+    label: item.name,
+    value: item.otp,
+  }));
 
   return (
     <div className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md py-auto content-center ">
@@ -66,8 +70,15 @@ const PendingCard = (props) => {
       <div className="text-gray-600">
         <span className="font-bold">Order ID :</span> {props.order.order_id}
       </div>
-
-      {/* Buttons */}
+      <SimpleDropdown
+        options={dropdownOptions}
+        searchable
+        configs={{
+          position: { y: "bottom", x: "center" },
+          fullWidthParent: true,
+        }}
+        className="w-full z-0 mx-4"
+      />
       <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
