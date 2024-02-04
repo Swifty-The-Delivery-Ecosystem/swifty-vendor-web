@@ -28,10 +28,9 @@ export const OrderProvider = ({ children }) => {
 
       const result = await response.json();
       if (Array.isArray(result)) {
-        if(result != orders){
+        if (result != orders) {
           setOrders(result);
         }
-        
       } else {
         console.error("Invalid data format for orders:", result);
       }
@@ -55,10 +54,19 @@ export const OrderProvider = ({ children }) => {
 
       const result = await response.json();
       if (Array.isArray(result)) {
-        console.log(result, "Rizzult \n",pendingOrders,"Damn \n", JSON.stringify(result) != JSON.stringify(pendingOrders));
-        if(JSON.stringify(result) != JSON.stringify(pendingOrders)){
+        console.log(
+          result,
+          "Rizzult \n",
+          pendingOrders,
+          "Damn \n",
+          JSON.stringify(result) != JSON.stringify(pendingOrders)
+        );
+        if (
+          JSON.stringify(result) != JSON.stringify(pendingOrders) &&
+          window.href.pathname != "/login"
+        ) {
           setPendingOrders(result);
-        } 
+        }
       } else {
         console.error("Invalid data format for pending orders:", result);
       }
@@ -69,25 +77,25 @@ export const OrderProvider = ({ children }) => {
 
   useEffect(() => {
     handlePendingOrdersFetch();
-  })
+  });
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     // if (token) {
-      const ordersInterval = setInterval(() => {
-        handleOrdersFetch();
-      }, 5000);
+    const ordersInterval = setInterval(() => {
+      handleOrdersFetch();
+    }, 5000);
 
-      // const pendingOrdersInterval = setInterval(() => {
-      //   handlePendingOrdersFetch();
-      // }, 5000);
+    // const pendingOrdersInterval = setInterval(() => {
+    //   handlePendingOrdersFetch();
+    // }, 5000);
 
-      // Clear intervals on component unmount
-      return () => {
-        clearInterval(ordersInterval);
-        // clearInterval(pendingOrdersInterval);
-      };
+    // Clear intervals on component unmount
+    return () => {
+      clearInterval(ordersInterval);
+      // clearInterval(pendingOrdersInterval);
+    };
     // }
   }, []);
 
