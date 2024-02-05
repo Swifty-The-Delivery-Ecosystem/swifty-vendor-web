@@ -11,11 +11,11 @@ const Onboarding = () => {
 
   const options = ["Kanhar", "Indravati", "MSH", "Mess Block", "Delta"];
   const locationMapping = {
-    Kanhar: 1,
-    Indravati: 2,
-    MSH: 3,
+    "Kanhar": 1,
+    "Indravati": 2,
+    "MSH": 3,
     "Mess Block": 4,
-    Delta: 5,
+    "Delta": 5,
   };
 
   const [imageUrls, setImageUrls] = useState([""]);
