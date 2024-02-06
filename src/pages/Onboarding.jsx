@@ -7,16 +7,38 @@ const Onboarding = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenLocation, setIsOpenLocation] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [location, setLocation] = useState(null);
 
   const options = ["Kanhar", "Indravati", "MSH", "Mess Block", "Delta"];
   const locationMapping = {
-    "Kanhar": 1,
-    "Indravati": 2,
-    "MSH": 3,
+    Kanhar: 1,
+    Indravati: 2,
+    MSH: 3,
     "Mess Block": 4,
-    "Delta": 5,
+    Delta: 5,
   };
+  const mapNumbersToNames = () => {
+    return selectedOptions.map((optionNumber) => {
+      return Object.keys(locationMapping).find(
+        (key) => locationMapping[key] === optionNumber
+      );
+    });
+  };
+  const tags = [
+    "Pizza",
+    "Biryani",
+    "Chinese",
+    "Desserts",
+    "Paratha",
+    "Beverages",
+    "Fast Food",
+    "Snacks",
+    "Sandwich",
+    "Rolls",
+    "Momos",
+    "Dosa",
+  ];
 
   const [imageUrls, setImageUrls] = useState([""]);
   const handleImageChange = (e, index) => {
@@ -44,6 +66,18 @@ const Onboarding = () => {
     setIsOpen(!isOpen);
   };
 
+  const [formData, setFormData] = useState({
+    email: "adityasankhla@iitbhilai.ac.in",
+    ownerName: "Adiya Sankhla",
+    restaurantName: "adiStore",
+    password: "aditya",
+    confirmPassword: "aditya",
+    location: 1,
+    phone: "8369504378",
+    supported_location: [1, 2],
+    images: ["https://www.google.com"],
+  });
+
   const handleOptionClick = (option) => {
     const optionNumber = locationMapping[option];
     const isSelected = selectedOptions.includes(optionNumber);
@@ -57,45 +91,14 @@ const Onboarding = () => {
     setIsOpen(false);
   };
 
-  const [formData, setFormData] = useState({
-    email: "adityasankhla@iitbhilai.ac.in",
-    ownerName: "Adiya Sankhla",
-    restaurantName: "adiStore",
-    password: "aditya",
-    confirmPassword: "aditya",
-    location: 1,
-    phone: "8369504378",
-    supported_location: [1, 2],
-    images: ["https://www.google.com"],
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "image") {
-      // If the input is for the images array
-      const newImageUrls = [...imageUrls];
-      newImageUrls[e.target.dataset.index] = value;
-      setImageUrls(newImageUrls);
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    } else {
-      // For other form fields
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+  const handleTagSelection = (tag) => {
+    if (!selectedTags.includes(tag)) {
+      setSelectedTags([...selectedTags, tag]);
     }
   };
 
-  const mapNumbersToNames = () => {
-    return selectedOptions.map((optionNumber) => {
-      return Object.keys(locationMapping).find(
-        (key) => locationMapping[key] === optionNumber
-      );
-    });
+  const handleTagDeselection = (tag) => {
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
 
   const handleSubmit = async (e) => {
@@ -105,6 +108,7 @@ const Onboarding = () => {
       ...formData,
       supported_location: selectedOptions,
       images: imageUrls,
+      tags: selectedTags,
     };
 
     console.log("Form submitted:", formDataWithMappedLocation);
@@ -130,16 +134,37 @@ const Onboarding = () => {
     console.log(data);
 
     if (response.ok) {
-      // Navigate to the login page upon successful registration
       navigate("/login");
     } else {
-      // Handle registration error
       alert("Registration failed. Please try again.");
     }
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "image") {
+      // If the input is for the images array
+      const newImageUrls = [...imageUrls];
+      newImageUrls[e.target.dataset.index] = value;
+      setImageUrls(newImageUrls);
+    } else if (name === "tags") {
+      // If the input is for the tags array
+      const tag = value.trim();
+      if (tag !== "") {
+        setSelectedTags([...selectedTags, tag]);
+      }
+    } else {
+      // For other form fields
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-green-100">
+    <div className="min-h-screen z-0 bg-green-100">
       <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-4 pt-12">
         Welcome to Vendor Onboarding.
       </h2>
@@ -170,7 +195,7 @@ const Onboarding = () => {
                 id="text"
                 name="phone"
                 onChange={handleChange}
-                className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className="w-full z-0 bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
           </div>
@@ -351,6 +376,47 @@ const Onboarding = () => {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+          <div className="p-2 w-full">
+            <div className="relative">
+              <label
+                for="description"
+                className="leading-7 text-base text-black"
+              >
+                Description
+              </label>
+              <input
+                type="email"
+                id="description"
+                name="description"
+                onChange={handleChange}
+                className="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              />
+            </div>
+          </div>
+          <div className="p-2 w-full">
+            <div className="leading-7 text-base text-black">Tags</div>
+            <div className="relative inline-block text-left mt-1">
+              <div className="flex flex-wrap">
+                {tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className={`p-2 rounded-md border ${
+                      selectedTags.includes(tag)
+                        ? "bg-emerald-500 text-white"
+                        : "bg-gray-200"
+                    } cursor-pointer mr-2 mb-2`}
+                    onClick={() =>
+                      selectedTags.includes(tag)
+                        ? handleTagDeselection(tag)
+                        : handleTagSelection(tag)
+                    }
+                  >
+                    {tag}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="p-2 w-full">

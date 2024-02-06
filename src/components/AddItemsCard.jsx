@@ -25,6 +25,12 @@ const AddItemsCard = () => {
     }
   };
 
+  const addItems = () => {
+    // Perform any necessary logic
+    console.log("Adding items...");
+    navigate("/add_items");
+  };
+
   return (
     <div className="w-1/2 my-4 flex justify-evenly">
       <input
@@ -34,7 +40,10 @@ const AddItemsCard = () => {
         value={searchTerm}
         onChange={(e) => handleSearch(e.target.value)}
       />
-      <div className="w-fit my-2 cursor-pointer flex text-white items-center px-4 rounded-xl bg-emerald-500">
+      <div
+        onClick={addItems}
+        className="w-fit my-2 cursor-pointer flex text-white items-center px-4 rounded-xl bg-emerald-500"
+      >
         {" "}
         <IoMdAdd /> Add Items
       </div>
