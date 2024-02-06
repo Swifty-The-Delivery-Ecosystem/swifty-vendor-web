@@ -38,7 +38,6 @@ export const VendorProvider = ({ children }) => {
     if (response.ok) {
       const result = await response.json();
       const data = result.data.user;
-      console.log("test", data);
       setVendorData(data);
       localStorage.setItem("vendorData", JSON.stringify(data));
       localStorage.setItem("isVendorLogged", true);
