@@ -66,9 +66,6 @@ const Body = () => {
   };
 
   const searchPendingCards = () => {
-    console.log("These are the pending orders");
-    console.log(pendingOrders);
-
     if (pendingOrders.length > 0 && pendingOrders[0].amount == -25) {
       return <ShimmerSimpleGallery card imageHeight={200} caption />;
     }

@@ -9,7 +9,6 @@ import { useDelivery } from "../context/deliveryPartnerContext";
 const PendingCard = (props) => {
   const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
   const delivery = useDelivery();
-  console.log(delivery.delivery);
   const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState({
     label: "",
     value: 0,
@@ -100,22 +99,12 @@ const PendingCard = (props) => {
       <div className="text-gray-600">
         <span className="font-bold">Order ID :</span> {props.order.order_id}
       </div>
-      <SimpleDropdown
+      <CustomDropdown
         options={dropdownOptions}
-        searchable
-        onChange={(value) => {
+        onSelect={(value) => {
           console.log(value);
           setSelectedDeliveryBoy(value);
         }}
-        labels={{
-          selectedPrefix: `${selectedDeliveryBoy.label}`,
-          notSelected: `${selectedDeliveryBoy.label}`,
-        }}
-        configs={{
-          position: { y: "bottom", x: "center" },
-          fullWidthParent: true,
-        }}
-        className="w-full z-0 mx-4"
       />
       <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
         <button
@@ -132,3 +121,56 @@ const PendingCard = (props) => {
 };
 
 export default PendingCard;
+
+const CustomDropdown = ({ options, onSelect }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    onSelect(option);
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <div className="border border-gray-300 p-1 rounded-md">
+        <div
+          className="flex items-center justify-between cursor-pointer"
+          onClick={toggleDropdown}
+        >
+          <span>{selectedOption ? selectedOption.label : "Select"}</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M3.293 6.293a1 1 0 0 1 1.414 0L10 11.586l5.293-5.293a1 1 0 1 1 1.414 1.414l-6 6a1 1 0 0 1-1.414 0l-6-6a1 1 0 0 1 0-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </div>
+        {isOpen && (
+          <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg">
+            {options.map((option) => (
+              <div
+                key={option.value}
+                className="py-1 px-3 cursor-pointer hover:bg-gray-100"
+                onClick={() => handleOptionClick(option)}
+              >
+                {option.label}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};

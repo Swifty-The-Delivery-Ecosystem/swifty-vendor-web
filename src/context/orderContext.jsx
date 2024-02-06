@@ -67,11 +67,8 @@ export const OrderProvider = ({ children }) => {
         const result = await response.json();
         if (Array.isArray(result)) {
           console.log(
-            result,
-            "Rizzult \n",
-            pendingOrders,
-            "Damn \n",
-            JSON.stringify(result) != JSON.stringify(pendingOrders)
+            "testing",
+            JSON.stringify(result),JSON.stringify(pendingOrders)
           );
           if (
             JSON.stringify(result) != JSON.stringify(pendingOrders) &&
