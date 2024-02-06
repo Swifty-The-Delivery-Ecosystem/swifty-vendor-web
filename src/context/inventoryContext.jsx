@@ -9,30 +9,37 @@ export const useInventory = () => {
 
 export const InventoryProvider = ({ children }) => {
   const [inventory, setInventory] = useState([]);
+  let isVendorLogged = false;
+  if(localStorage.getItem('isVendorLogged')){
+    isVendorLogged = localStorage.isVendorLogged;
+  }
 
   useEffect(() => {
     const fetchInventory = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await fetch(
-          // "http://127.0.0.1:4005/api/v1/inventory/vendor/menuitems",
-          "https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems?startIndex=0&pageSize=5",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + token,
-            },
-            //   mode: "no-cors"
-          }
-        );
-
-        const data = await response.json();
-        console.log(data.items);
-        setInventory(data.items);
-      } catch (error) {
-        // Handle the error
+      if(isVendorLogged){
+        try {
+          const token = localStorage.getItem("token");
+          const response = await fetch(
+            // "http://127.0.0.1:4005/api/v1/inventory/vendor/menuitems",
+            "https://inventory-service-git-main-swiftyeco.vercel.app/api/v1/inventory/vendor/menuitems?startIndex=0&pageSize=5",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+              //   mode: "no-cors"
+            }
+          );
+  
+          const data = await response.json();
+          console.log(data.items);
+          setInventory(data.items);
+        } catch (error) {
+          // Handle the error
+        }
       }
+      
     };
 
     fetchInventory();

@@ -5,6 +5,10 @@ export const OrdersContext = createContext();
 export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
+  let isVendorLogged = false;
+  if(localStorage.getItem('isVendorLogged')){
+    isVendorLogged = localStorage.isVendorLogged;
+  }
 
   const contextValue = {
     orders,
@@ -14,65 +18,71 @@ export const OrderProvider = ({ children }) => {
   };
 
   const handleOrdersFetch = async () => {
-    try {
-      const response = await fetch(
-        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=pending",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.token,
-          },
+    if(isVendorLogged){
+      try {
+        const response = await fetch(
+          "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=pending",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.token,
+            },
+          }
+        );
+  
+        const result = await response.json();
+        if (Array.isArray(result)) {
+          if (result != orders) {
+            setOrders(result);
+          }
+        } else {
+          console.error("Invalid data format for orders:", result);
         }
-      );
-
-      const result = await response.json();
-      if (Array.isArray(result)) {
-        if (result != orders) {
-          setOrders(result);
-        }
-      } else {
-        console.error("Invalid data format for orders:", result);
+      } catch (e) {
+        console.error("Error fetching orders data:", e);
       }
-    } catch (e) {
-      console.error("Error fetching orders data:", e);
     }
   };
 
   const handlePendingOrdersFetch = async () => {
-    try {
-      const response = await fetch(
-        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.token,
-          },
-        }
-      );
+    if(isVendorLogged){
 
-      const result = await response.json();
-      if (Array.isArray(result)) {
-        console.log(
-          result,
-          "Rizzult \n",
-          pendingOrders,
-          "Damn \n",
-          JSON.stringify(result) != JSON.stringify(pendingOrders)
+      try {
+        const response = await fetch(
+          "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.token,
+            },
+          }
         );
-        if (
-          JSON.stringify(result) != JSON.stringify(pendingOrders) &&
-          window.href.pathname != "/login"
-        ) {
-          setPendingOrders(result);
+  
+        const result = await response.json();
+        if (Array.isArray(result)) {
+          console.log(
+            result,
+            "Rizzult \n",
+            pendingOrders,
+            "Damn \n",
+            JSON.stringify(result) != JSON.stringify(pendingOrders)
+          );
+          if (
+            JSON.stringify(result) != JSON.stringify(pendingOrders) &&
+            window.href.pathname != "/login"
+          ) {
+            setPendingOrders(result);
+          }
+        } else {
+          console.error("Invalid data format for pending orders:", result);
         }
-      } else {
-        console.error("Invalid data format for pending orders:", result);
+      } catch (e) {
+        console.error("Error fetching pending orders data:", e);
       }
-    } catch (e) {
-      console.error("Error fetching pending orders data:", e);
     }
+    
   };
 
   useEffect(() => {

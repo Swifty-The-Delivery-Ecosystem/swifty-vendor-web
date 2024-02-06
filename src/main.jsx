@@ -8,10 +8,13 @@ import { OrderProvider } from "./context/orderContext";
 import { SearchProvider } from "./context/searchContext";
 import { InventoryProvider } from "./context/inventoryContext";
 import { DeliveryProvider } from "./context/deliveryPartnerContext";
+import { VendorProvider } from "./context/vendorContext";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <VendorProvider>
     <BrowserRouter>
     <OrderProvider>
       <InventoryProvider>
@@ -23,6 +26,7 @@ root.render(
       </InventoryProvider>
     </OrderProvider>
     </BrowserRouter>
+    </VendorProvider>
   </React.StrictMode>
 );
 // reportWebVitals();

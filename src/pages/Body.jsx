@@ -6,6 +6,9 @@ import { useSearch } from "../context/searchContext";
 import { OrdersContext } from "../context/orderContext";
 
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
+import { VendorContext, useVendor } from "../context/vendorContext";
+
+
 
 const Body = () => {
   // const { search, setSearch } = useSearch();
@@ -13,6 +16,14 @@ const Body = () => {
   let search = "";
   const { orders, setOrders, pendingOrders, setPendingOrders } =
     useContext(OrdersContext);
+    let  {isVendorLogged, vendorData}  = useContext(VendorContext);
+    if(localStorage.getItem('isVendorLogged')){
+      isVendorLogged = localStorage.isVendorLogged;
+    }
+    if(localStorage.getItem('vendorData')){
+      vendorData = JSON.parse(localStorage.vendorData);
+    }
+    
 
   const searchCards = () => {
     console.log("These are the orders");
@@ -91,7 +102,16 @@ const Body = () => {
 
   return (
     <>
+     
+
       <div className="bg-green-100 min-h-screen px-10 flex divide-x divide-black divide-dashed">
+      {
+        isVendorLogged  && (vendorData["status"] != "active") && <div>Vendor not approved yet</div>
+      }
+        
+        
+      {
+        isVendorLogged && (vendorData["status"] == "active") && <>
         <div className="my-4 w-1/2">
           <div className="py-4 px-10 font-bold text-2xl text-center">
             New Orders
@@ -106,7 +126,10 @@ const Body = () => {
             {searchPendingCards()}
           </div>
         </div>
-      </div>
+      
+      </>
+}
+</div>
     </>
   );
 };
