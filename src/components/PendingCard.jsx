@@ -9,12 +9,17 @@ import { useDelivery } from "../context/deliveryPartnerContext";
 const PendingCard = (props) => {
   const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
   const delivery = useDelivery();
-  const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState({label:"", value:0, id:"0"});
+  console.log(delivery.delivery);
+  const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState({
+    label: "",
+    value: 0,
+    id: "0",
+  });
 
   // console.log("delivery", delivery.delivery);
 
   const removeOrder = async (order_id, newStatus) => {
-    console.log(order_id, newStatus , selectedDeliveryBoy);
+    console.log(order_id, newStatus, selectedDeliveryBoy);
     try {
       const response = await fetch(
         "https://order-service-peach.vercel.app/api/v1/order_service/delivery_boy",
@@ -24,15 +29,15 @@ const PendingCard = (props) => {
             "Content-Type": "application/json",
             Authorization: "Bearer " + localStorage.token,
           },
-          body:JSON.stringify({
+          body: JSON.stringify({
             order_id: order_id,
             delivery_partner_id: selectedDeliveryBoy.id,
-          }) 
+          }),
         }
       );
 
       const result = await response.json();
-      console.log(result)
+      console.log(result);
     } catch (e) {
       console.error("Error fetching pending orders data:", e);
     }
@@ -53,7 +58,7 @@ const PendingCard = (props) => {
       );
 
       console.log(response);
-      setSelectedDeliveryBoy({label:"", value:0, id:"0"});
+      setSelectedDeliveryBoy({ label: "", value: 0, id: "0" });
 
       if (response.status === 200 || response.status === 201) {
         const updatedPendingOrders = pendingOrders.filter(
@@ -71,7 +76,7 @@ const PendingCard = (props) => {
   const dropdownOptions = delivery.delivery.map((item) => ({
     label: item.name,
     value: item.otp,
-    id: item._id
+    id: item._id,
   }));
 
   return (
@@ -99,7 +104,7 @@ const PendingCard = (props) => {
         options={dropdownOptions}
         searchable
         onChange={(value) => {
-          console.log(value)
+          console.log(value);
           setSelectedDeliveryBoy(value);
         }}
         labels={{
@@ -115,7 +120,9 @@ const PendingCard = (props) => {
       <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
         <button
           className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() => removeOrder(props.order.order_id, "departed", selectedDeliveryBoy)}
+          onClick={() =>
+            removeOrder(props.order.order_id, "departed", selectedDeliveryBoy)
+          }
         >
           Out for Delivery
         </button>
