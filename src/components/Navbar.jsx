@@ -24,6 +24,8 @@ const NavBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.setItem("isVendorLogged", false);
+    localStorage.removeItem("vendorData");
     navigate("/login");
   };
 
