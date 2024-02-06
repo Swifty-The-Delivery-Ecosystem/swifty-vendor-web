@@ -71,7 +71,7 @@ export const OrderProvider = ({ children }) => {
           );
           if (
             JSON.stringify(result) != JSON.stringify(pendingOrders) &&
-            window.location.pathName != "/login"
+            window.location.pathname != "/login"
           ) {
             setPendingOrders(result);
           }
