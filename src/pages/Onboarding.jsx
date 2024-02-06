@@ -450,15 +450,20 @@ const Onboarding = () => {
               </button>
             </div>
           </div>
-          <div className="p-2 w-full mt-8">
-            {/* <Link to="/login"> */}
+          <div className="p-2 flex gap-4 w-full mt-8">
             <button
               className="flex mx-auto text-white bg-emerald-700 border-0 py-2 px-8 focus:outline-none hover:bg-emerald-800 rounded text-lg"
               onClick={handleSubmit}
             >
               Register
             </button>
-            {/* </Link> */}
+
+            <button
+              className="flex mx-auto text-white bg-emerald-700 border-0 py-2 px-8 focus:outline-none hover:bg-emerald-800 rounded text-lg"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
           </div>
         </div>
       </div>

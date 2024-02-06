@@ -24,14 +24,14 @@ const Body = () => {
   }
 
   useEffect(() => {
-    fetchVendorDetails(vendorData._id, localStorage.token);
+    vendorData && fetchVendorDetails(vendorData._id, localStorage.token);
     if (localStorage.getItem("isVendorLogged")) {
       isVendorLogged = localStorage.isVendorLogged;
     }
     if (localStorage.getItem("vendorData")) {
       vendorData = JSON.parse(localStorage.vendorData);
     }
-  }, []);
+  }, [vendorData]);
 
   const searchCards = () => {
     console.log("These are the orders");
@@ -112,11 +112,19 @@ const Body = () => {
   return (
     <>
       <div className="bg-green-100 min-h-screen px-10 flex divide-x divide-black divide-dashed">
-        {isVendorLogged && vendorData["status"] != "active" && (
-          <div>Vendor not approved yet</div>
+        {isVendorLogged && vendorData && vendorData["status"] != "active" && (
+          <div
+            className="bg-blue-100 border w-fit mx-auto overflow-y-hidden h-fit text-center items-center my-autp border-blue-400 text-blue-700 px-4 py-3 rounded"
+            role="alert"
+          >
+            <strong className="font-bold text-red-500">
+              Admin has not approved you yet:{" "}
+            </strong>
+            <span className="block sm:inline">Kindly wait for approval.</span>
+          </div>
         )}
 
-        {isVendorLogged && vendorData["status"] == "active" && (
+        {isVendorLogged && vendorData && vendorData["status"] == "active" && (
           <>
             <div className="my-4 w-1/2">
               <div className="py-4 px-10 font-bold text-2xl text-center">

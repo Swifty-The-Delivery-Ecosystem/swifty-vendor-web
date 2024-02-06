@@ -6,8 +6,13 @@ export const OrderProvider = ({ children }) => {
   const [orders, setOrders] = useState([]);
   const [pendingOrders, setPendingOrders] = useState([]);
   let isVendorLogged = false;
-  if(localStorage.getItem('isVendorLogged')){
+  let vendorData = null;
+  if (localStorage.getItem("isVendorLogged")) {
     isVendorLogged = localStorage.isVendorLogged;
+  }
+
+  if (localStorage.getItem("vendorData")) {
+    vendorData = JSON.parse(localStorage.vendorData);
   }
 
   const contextValue = {
@@ -18,7 +23,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   const handleOrdersFetch = async () => {
-    if(isVendorLogged){
+    if (isVendorLogged && vendorData && vendorData["status"] == "active") {
       try {
         const response = await fetch(
           "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=pending",
@@ -30,7 +35,7 @@ export const OrderProvider = ({ children }) => {
             },
           }
         );
-  
+
         const result = await response.json();
         if (Array.isArray(result)) {
           if (result != orders) {
@@ -46,8 +51,7 @@ export const OrderProvider = ({ children }) => {
   };
 
   const handlePendingOrdersFetch = async () => {
-    if(isVendorLogged){
-
+    if (isVendorLogged && vendorData && vendorData["status"] == "active") {
       try {
         const response = await fetch(
           "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
@@ -59,7 +63,7 @@ export const OrderProvider = ({ children }) => {
             },
           }
         );
-  
+
         const result = await response.json();
         if (Array.isArray(result)) {
           console.log(
@@ -82,7 +86,6 @@ export const OrderProvider = ({ children }) => {
         console.error("Error fetching pending orders data:", e);
       }
     }
-    
   };
 
   useEffect(() => {
