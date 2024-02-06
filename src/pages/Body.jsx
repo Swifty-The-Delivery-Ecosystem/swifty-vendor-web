@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import OrderCard from "../components/OrderCard";
 import PendingCard from "../components/PendingCard";
 import { useSearch } from "../context/searchContext";
@@ -8,22 +8,30 @@ import { OrdersContext } from "../context/orderContext";
 import { ShimmerSimpleGallery } from "react-shimmer-effects";
 import { VendorContext, useVendor } from "../context/vendorContext";
 
-
-
 const Body = () => {
   // const { search, setSearch } = useSearch();
   // const { orders, setOrders, pendingOrders, setPendingOrders } = useOrders();
   let search = "";
   const { orders, setOrders, pendingOrders, setPendingOrders } =
     useContext(OrdersContext);
-    let  {isVendorLogged, vendorData}  = useContext(VendorContext);
-    if(localStorage.getItem('isVendorLogged')){
+  let { isVendorLogged, vendorData, fetchVendorDetails } =
+    useContext(VendorContext);
+  if (localStorage.getItem("isVendorLogged")) {
+    isVendorLogged = localStorage.isVendorLogged;
+  }
+  if (localStorage.getItem("vendorData")) {
+    vendorData = JSON.parse(localStorage.vendorData);
+  }
+
+  useEffect(() => {
+    fetchVendorDetails(vendorData._id, localStorage.token);
+    if (localStorage.getItem("isVendorLogged")) {
       isVendorLogged = localStorage.isVendorLogged;
     }
-    if(localStorage.getItem('vendorData')){
+    if (localStorage.getItem("vendorData")) {
       vendorData = JSON.parse(localStorage.vendorData);
     }
-    
+  }, []);
 
   const searchCards = () => {
     console.log("These are the orders");
@@ -60,18 +68,20 @@ const Body = () => {
   const searchPendingCards = () => {
     console.log("These are the pending orders");
     console.log(pendingOrders);
-  
+
     if (pendingOrders.length > 0 && pendingOrders[0].amount == -25) {
       return <ShimmerSimpleGallery card imageHeight={200} caption />;
     }
-  
+
     if (search !== "") {
       const filteredOrders = pendingOrders.filter(
         (pendingOrder) =>
           pendingOrder.itemName.toLowerCase().includes(search.toLowerCase()) ||
-          pendingOrder.deliveryLocation.toLowerCase().includes(search.toLowerCase())
+          pendingOrder.deliveryLocation
+            .toLowerCase()
+            .includes(search.toLowerCase())
       );
-  
+
       return (
         filteredOrders &&
         filteredOrders.map((e) => (
@@ -87,12 +97,11 @@ const Body = () => {
         ))
       );
     } else {
-      return (
-        pendingOrders.map((e) => <PendingCard order={e} key={e.orderId} />)
-      );
+      return pendingOrders.map((e) => (
+        <PendingCard order={e} key={e.orderId} />
+      ));
     }
   };
-  
 
   // const PendCards = () => {
   //   console.log(pendingOrders);
@@ -102,34 +111,32 @@ const Body = () => {
 
   return (
     <>
-     
-
       <div className="bg-green-100 min-h-screen px-10 flex divide-x divide-black divide-dashed">
-      {
-        isVendorLogged  && (vendorData["status"] != "active") && <div>Vendor not approved yet</div>
-      }
-        
-        
-      {
-        isVendorLogged && (vendorData["status"] == "active") && <>
-        <div className="my-4 w-1/2">
-          <div className="py-4 px-10 font-bold text-2xl text-center">
-            New Orders
-          </div>
-          <div className="flex flex-wrap justify-center">{searchCards()}</div>
-        </div>
-        <div className="my-4 w-1/2">
-          <div className="py-4 px-10 font-bold text-2xl text-center">
-            Pending Orders
-          </div>
-          <div className="flex flex-wrap justify-center">
-            {searchPendingCards()}
-          </div>
-        </div>
-      
-      </>
-}
-</div>
+        {isVendorLogged && vendorData["status"] != "active" && (
+          <div>Vendor not approved yet</div>
+        )}
+
+        {isVendorLogged && vendorData["status"] == "active" && (
+          <>
+            <div className="my-4 w-1/2">
+              <div className="py-4 px-10 font-bold text-2xl text-center">
+                New Orders
+              </div>
+              <div className="flex flex-wrap justify-center">
+                {searchCards()}
+              </div>
+            </div>
+            <div className="my-4 w-1/2">
+              <div className="py-4 px-10 font-bold text-2xl text-center">
+                Pending Orders
+              </div>
+              <div className="flex flex-wrap justify-center">
+                {searchPendingCards()}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </>
   );
 };
