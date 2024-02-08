@@ -8,6 +8,7 @@ import Onboarding from "./pages/Onboarding";
 import AddItem from "./pages/AddItem";
 import DeliveryPartnerPage from "./pages/DeliveryPartner";
 import InventoryPage from "./pages/Inventory";
+import OrderNotification from "./pages/test";
 
 function App() {
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ function App() {
         <Route path="/register" element={<Onboarding />} />
         <Route path="/add_items" element={<AddItem />} />
         <Route path="/inventory" element={<InventoryPage />} />
-        <Route path="/delivery_partner" element={< DeliveryPartnerPage/>} />
+        <Route path="/delivery_partner" element={<DeliveryPartnerPage />} />
+        <Route
+          path="/test/:vendorId"
+          element={<OrderNotification vendorId="65c1f7348d622f264c799d53" />}
+        />
       </Routes>
     </div>
   );
