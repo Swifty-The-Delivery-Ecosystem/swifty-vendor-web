@@ -1,16 +1,17 @@
 import React from "react";
-import { useInventory } from "../context/inventoryContext";
+import InventoryContext from "../context/inventoryContext";
 import InventoryCard from "../components/InventoryCard";
 import AddItemsCard from "../components/AddItemsCard";
+import { useContext } from "react";
 
 const InventoryPage = () => {
-  const { inventory } = useInventory();
-  
+  // const { inventory } = useInventory();
+  const inventoryContext = useContext(InventoryContext);
 
   return (
     <div className="flex items-center justify-center flex-col">
       <AddItemsCard />
-      {inventory.map(item => (
+      {inventoryContext.inventory.map((item) => (
         <InventoryCard key={item._id} item={item} />
       ))}
     </div>

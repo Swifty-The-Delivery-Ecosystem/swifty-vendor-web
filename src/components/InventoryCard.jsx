@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import Modal from "react-modal";
 
-import { useInventory } from "../context/inventoryContext";
+import InventoryContext from "../context/inventoryContext";
 
 const UpdateItemModal = ({ item, isOpen, onClose }) => {
-  const { updateInventoryItem } = useInventory();
+  // const { updateInventoryItem } = useInventory();
+  const inventoryContext = useContext(InventoryContext);
   const [updatedFields, setUpdatedFields] = useState({ ...item });
   const [selectedTags, setSelectedTags] = useState([...item.tags]);
   const tagsOptions = [
@@ -27,15 +28,13 @@ const UpdateItemModal = ({ item, isOpen, onClose }) => {
   };
 
   const toggleDropdownTags = () => {
-    // You can customize the dropdown behavior here
-    // For simplicity, I'm using a basic toggle
     setIsOpenTags(!isOpenTags);
   };
 
   const [isOpenTags, setIsOpenTags] = useState(false);
 
   const handleUpdate = () => {
-    updateInventoryItem(item.item_id, {
+    inventoryContext.updateInventoryItem(item.item_id, {
       ...updatedFields,
       tags: selectedTags,
       is_veg: updatedFields.is_veg === "0" ? true : false,

@@ -1,10 +1,11 @@
 import { faTags } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useInventory } from "../context/inventoryContext";
+import InventoryContext from "../context/inventoryContext";
 
 const AddItem = () => {
-  const { inventory, setInventory } = useInventory();
+  // const { inventory, setInventory } = useInventory();
+  const inventoryContext = useContext(InventoryContext);
   const navigate = useNavigate();
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState();
@@ -36,8 +37,6 @@ const AddItem = () => {
   };
 
   const toggleDropdownTags = () => {
-    // You can customize the dropdown behavior here
-    // For simplicity, I'm using a basic toggle
     setIsOpenTags(!isOpenTags);
   };
 
@@ -73,7 +72,7 @@ const AddItem = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setInventory([...inventory, data]);
+        inventoryContext.setInventory([...inventoryContext.inventory, data]);
         navigate("/inventory");
       } else {
         const errorData = await response.json();

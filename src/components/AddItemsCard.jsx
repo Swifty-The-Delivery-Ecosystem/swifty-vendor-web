@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { useInventory } from "../context/inventoryContext";
+import InventoryContext from "../context/inventoryContext";
 
 const AddItemsCard = () => {
-  const { inventory, setInventory } = useInventory();
+  // const { inventory, setInventory } = useInventory();
+  const inventoryContext = useContext(InventoryContext);
   const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,13 +16,13 @@ const AddItemsCard = () => {
     // Check if the search term is empty
     if (value === "" || value.length === 0) {
       // Reset the inventory to its original state
-      setInventory(inventory);
+      inventoryContext.setInventory(inventoryContext.inventory);
     } else {
       // Apply the filter and update the inventory
-      const filteredItems = inventory.filter((item) =>
+      const filteredItems = inventoryContext.inventory.filter((item) =>
         item.name.toLowerCase().includes(value.toLowerCase())
       );
-      setInventory(filteredItems);
+      inventoryContext.setInventory(filteredItems);
     }
   };
 

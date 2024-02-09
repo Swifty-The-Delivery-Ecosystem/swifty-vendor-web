@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaPencilAlt } from "react-icons/fa";
 import Modal from "react-modal";
-import { useDelivery } from "../context/deliveryPartnerContext";
+import DeliveryContext from "../context/deliveryPartnerContext";
 
 const UpdateModal = ({ deliveryPartner, isOpen, onClose }) => {
-  const { updateDeliveryPartner } = useDelivery();
+  // const { updateDeliveryPartner } = useDelivery();
+  const deliveryContext = useContext(DeliveryContext);
   const [addFields, setAddFields] = useState({ ...deliveryPartner });
 
   const handleAdd = () => {
-    updateDeliveryPartner(deliveryPartner._id, addFields);
+    deliveryContext.updateDeliveryPartner(deliveryPartner._id, addFields);
     onClose();
   };
 

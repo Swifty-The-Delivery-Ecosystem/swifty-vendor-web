@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { VendorContext, useVendor } from "../context/vendorContext";
+import VendorContext from "../context/vendorContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const  {login, fetchVendorDetails}  = useContext(VendorContext);
+  const vendorContext = useContext(VendorContext);
 
   useEffect(() => {
     if (localStorage.getItem("token") !== null) {
@@ -35,7 +35,10 @@ const Login = () => {
         const data = await response.json();
 
         localStorage.setItem("token", data.data.token);
-        await fetchVendorDetails(data.data.userId, data.data.token);
+        await vendorContext.fetchVendorDetails(
+          data.data.userId,
+          data.data.token
+        );
         navigate("/");
       } else {
         const errorData = await response.json();

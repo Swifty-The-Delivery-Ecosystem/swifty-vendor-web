@@ -1,15 +1,16 @@
-import React from "react";
-import { useDelivery } from "../context/deliveryPartnerContext";
+import React, { useContext } from "react";
+import DeliveryContext from "../context/deliveryPartnerContext";
 import DeliveryPartnerCard from "../components/DeliveryPartnerCard";
 import AddDeliveryCard from "../components/AddDeliveryPartner";
 
 const DeliveryPartnerPage = () => {
-  const { delivery } = useDelivery();
-  console.log("delivery", delivery);
+  // const { delivery } = useDelivery();
+  const deliveryContext = useContext(DeliveryContext);
+  console.log("delivery", deliveryContext.delivery);
   return (
     <div className="flex items-center justify-center flex-col">
       <AddDeliveryCard />
-      {delivery.map((item) => (
+      {deliveryContext.delivery.map((item) => (
         <DeliveryPartnerCard key={item._id} deliveryPartner={item} />
       ))}
     </div>

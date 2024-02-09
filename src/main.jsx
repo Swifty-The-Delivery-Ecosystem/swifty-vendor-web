@@ -3,30 +3,28 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 // import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter } from 'react-router-dom';
-import { OrderProvider } from "./context/orderContext";
-import { SearchProvider } from "./context/searchContext";
-import { InventoryProvider } from "./context/inventoryContext";
-import { DeliveryProvider } from "./context/deliveryPartnerContext";
-import { VendorProvider } from "./context/vendorContext";
-
+import { BrowserRouter } from "react-router-dom";
+import OrderState from "./context/OrderState";
+import VendorState from "./context/VendorState";
+import DeliveryState from "./context/DeliveryBoyState";
+import InventoryState from "./context/InventoryState";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <VendorProvider>
-    <BrowserRouter>
-    <OrderProvider>
-      <InventoryProvider>
-        <DeliveryProvider>
-      <SearchProvider>
-        <App/>
-      </SearchProvider>
-      </DeliveryProvider>
-      </InventoryProvider>
-    </OrderProvider>
-    </BrowserRouter>
-    </VendorProvider>
+    <VendorState>
+      <BrowserRouter>
+        <OrderState>
+          <InventoryState>
+            <DeliveryState>
+              {/* <SearchProvider> */}
+              <App />
+              {/* </SearchProvider> */}
+            </DeliveryState>
+          </InventoryState>
+        </OrderState>
+      </BrowserRouter>
+    </VendorState>
   </React.StrictMode>
 );
 // reportWebVitals();

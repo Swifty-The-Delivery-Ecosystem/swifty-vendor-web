@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import Modal from "react-modal";
-import { useDelivery } from "../context/deliveryPartnerContext";
+import DeliveryContext from "../context/deliveryPartnerContext";
 
 const AddDeliveryPartnerModal = ({ isOpen, onClose }) => {
-  const { createDeliveryPartner } = useDelivery();
+  // const { createDeliveryPartner } = useDelivery();
+  const deliveryContext = useContext(DeliveryContext);
   const [deliveryPartner, setDeliveryPartner] = useState({
     name: "",
     phone: "",
   });
   const handleAdd = () => {
-    createDeliveryPartner(deliveryPartner);
+    deliveryContext.createDeliveryPartner(deliveryPartner);
 
     setDeliveryPartner({ name: "", phone: "" });
     onClose();

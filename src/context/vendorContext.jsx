@@ -1,61 +1,51 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import axios from "axios";
+import { createContext } from "react";
 
-export const VendorContext = createContext();
 
-export const useVendor = () => {
-  return useContext(VendorContext);
-};
+const VendorContext = createContext();
 
-export const VendorProvider = ({ children }) => {
-  const [vendorData, setVendorData] = useState(null);
-  const [isVendorLogged, setIsVendorLogged] = useState(false);
+// export const useVendor = () => {
+//   return useContext(VendorContext);
+// };
 
-  // if(localStorage.getItem("vendorData")){
-  //     setVendorData(localStorage.vendorData);
+// export const VendorProvider = ({ children }) => {
+  // const [vendorData, setVendorData] = useState(null);
+  // const [isVendorLogged, setIsVendorLogged] = useState(false);
+
+  // const fetchVendorDetails = async (vendorId, token) => {
+  //   const response = await fetch(
+  //     `https://auth-six-pi.vercel.app/api/v1/auth/vendors/${vendorId}`,
+  //     {
+  //       method: "GET",
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   if (response.ok) {
+  //     const result = await response.json();
+  //     const data = result.data.user;
+  //     setVendorData(data);
+  //     localStorage.setItem("vendorData", JSON.stringify(data));
+  //     localStorage.setItem("isVendorLogged", true);
+  //     setIsVendorLogged(true);
+  //   }
   // };
 
-  // if(localStorage.getItem("isVendorLogged")){
-  //     setIsVendorLogged(localStorage.isVendorLogged);
-  // };
+//   return (
+//     <VendorContext.Provider
+      // value={{
+      //   isVendorLogged,
+      //   vendorData,
+      //   login,
+      //   register,
+      //   fetchVendorDetails,
+      // }}
+//     >
+//       {children}
+//     </VendorContext.Provider>
+//   );
+// };
 
-  const login = async (username, password) => {};
-
-  const register = async (userData) => {};
-
-  const fetchVendorDetails = async (vendorId, token) => {
-    const response = await fetch(
-      `https://auth-six-pi.vercel.app/api/v1/auth/vendors/${vendorId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (response.ok) {
-      const result = await response.json();
-      const data = result.data.user;
-      setVendorData(data);
-      localStorage.setItem("vendorData", JSON.stringify(data));
-      localStorage.setItem("isVendorLogged", true);
-      setIsVendorLogged(true);
-    }
-  };
-
-  return (
-    <VendorContext.Provider
-      value={{
-        isVendorLogged,
-        vendorData,
-        login,
-        register,
-        fetchVendorDetails,
-      }}
-    >
-      {children}
-    </VendorContext.Provider>
-  );
-};
+export default VendorContext;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSearch } from "../context/searchContext";
 import swiftyLogo from "../assets/swifty-white.png";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,17 +9,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
-  const { search, setSearch } = useSearch();
+  // const { search, setSearch } = useSearch();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleInputChange = (e) => {
-    setSearch(e.target.value);
-  };
+  // const handleInputChange = (e) => {
+  //   setSearch(e.target.value);
+  // };
 
-  const handleSearch = () => {
-    setSearch("");
-  };
+  // const handleSearch = () => {
+  //   setSearch("");
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -35,8 +34,6 @@ const NavBar = () => {
 
   return (
     <nav className="bg-emerald-800 sticky z-50 top-0 p-4 flex items-center justify-between">
-      {/* Left Section - Search */}
-      {/* Logo */}
       <img
         src={swiftyLogo}
         alt="Logo"
@@ -48,19 +45,18 @@ const NavBar = () => {
           type="text"
           placeholder="Search"
           className="bg-green-100 text-black px-2 md:px-4 py-2 rounded focus:outline-none focus:shadow-outline"
-          value={search}
-          onChange={handleInputChange}
+          // value={search}
+          // onChange={handleInputChange}
         />
         <button className="mx-3 md:block hidden">
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             style={{ color: "white" }}
-            onClick={handleSearch}
+            // onClick={handleSearch}
           />
         </button>
       </div>
 
-      {/* Mobile Menu Hamburger Icon */}
       <div className="md:hidden">
         <button onClick={toggleMobileMenu}>
           <FontAwesomeIcon icon={faBars} style={{ color: "white" }} />

@@ -1,23 +1,70 @@
-import React, { useState, useContext } from "react";
-import { OrdersContext } from "../context/orderContext";
-import { SimpleDropdown } from "react-js-dropdavn";
-import "react-js-dropdavn/dist/index.css";
-
+import React, { useState, useContext, useEffect } from "react";
+import OrdersContext from "../context/orderContext";
+import DeliveryContext from "../context/deliveryPartnerContext";
+import VendorContext from "../context/vendorContext";
 import axios from "axios";
-import { useDelivery } from "../context/deliveryPartnerContext";
 
-const PendingCard = (props) => {
-  const { pendingOrders, setPendingOrders } = useContext(OrdersContext);
-  const delivery = useDelivery();
+const PendingCard = () => {
+  const orderContext = useContext(OrdersContext);
+  const vendorContext = useContext(VendorContext);
+
+  const deliveryContext = useContext(DeliveryContext);
   const [selectedDeliveryBoy, setSelectedDeliveryBoy] = useState({
     label: "",
     value: 0,
     id: "0",
   });
 
-  // console.log("delivery", delivery.delivery);
+  const dropdownOptions = deliveryContext.delivery.map((item) => ({
+    label: item.name,
+    value: item.otp,
+    id: item._id,
+  }));
 
-  const removeOrder = async (order_id, newStatus) => {
+  useEffect(() => {
+    if (
+      localStorage.isVendorLogged &&
+      localStorage.vendorData &&
+      JSON.parse(localStorage.vendorData)["status"] == "active"
+    ) {
+      fetch(
+        "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          if (Array.isArray(result)) {
+            if (
+              JSON.stringify(result) !==
+                JSON.stringify(orderContext.pendingOrders) &&
+              window.location.pathname !== "/login"
+            ) {
+              orderContext.setPendingOrders(result);
+            }
+          } else {
+            console.error("Invalid data format for pending orders:", result);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching pending orders data:", error);
+        });
+    }
+  }, [
+    "https://order-service-peach.vercel.app/api/v1/order_service/vendor?status=being%20cooked",
+  ]);
+
+  const handleOut = async (order_id, newStatus) => {
     console.log(order_id, newStatus, selectedDeliveryBoy);
     try {
       const response = await fetch(
@@ -60,62 +107,61 @@ const PendingCard = (props) => {
       setSelectedDeliveryBoy({ label: "", value: 0, id: "0" });
 
       if (response.status === 200 || response.status === 201) {
-        const updatedPendingOrders = pendingOrders.filter(
+        const updatedPendingOrders = orderContext.pendingOrders.filter(
           (order) => order.order_id !== order_id
         );
 
-        setPendingOrders(updatedPendingOrders);
+        orderContext.setPendingOrders(updatedPendingOrders);
       }
     } catch (error) {
       console.error("Error updating order:", error);
     }
   };
 
-  // Transform delivery data to the desired format
-  const dropdownOptions = delivery.delivery.map((item) => ({
-    label: item.name,
-    value: item.otp,
-    id: item._id,
-  }));
-
   return (
-    <div className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md py-auto content-center ">
-      <ol>
-        {props.order.items.map((item, index) => {
+    <div>
+      {orderContext.pendingOrders &&
+        orderContext.pendingOrders.map((order) => {
           return (
-            <li key={index}>
+            <ul className="border-4 w-56 h-64 p-4 m-2 bg-white rounded-lg shadow-md py-auto content-center ">
+              <ol>
+                {order.items.map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <div className="text-gray-600">
+                        <span className="font-bold">
+                          {item.name} * {item.quantity}
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
               <div className="text-gray-600">
-                <span className="font-bold">
-                  {item.name} * {item.quantity}
-                </span>
+                <span className="font-bold">Amount :</span> {order.amount}
               </div>
-            </li>
+              <div className="text-gray-600">
+                <span className="font-bold">Order ID :</span> {order.order_id}
+              </div>
+
+              <CustomDropdown
+                options={dropdownOptions}
+                onSelect={(value) => {
+                  console.log(value);
+                  setSelectedDeliveryBoy(value);
+                }}
+              />
+              <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
+                <button
+                  className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
+                  onClick={() => handleOut(order.order_id, "departed")}
+                >
+                  Out for Delivery
+                </button>
+              </div>
+            </ul>
           );
         })}
-      </ol>
-      <div className="text-gray-600">
-        <span className="font-bold">Amount :</span> {props.order.amount}
-      </div>
-      <div className="text-gray-600">
-        <span className="font-bold">Order ID :</span> {props.order.order_id}
-      </div>
-      <CustomDropdown
-        options={dropdownOptions}
-        onSelect={(value) => {
-          console.log(value);
-          setSelectedDeliveryBoy(value);
-        }}
-      />
-      <div className="mb-2 mt-4 flex justify-between flex-col gap-2">
-        <button
-          className="bg-green-500 text-white px-2 py-2 rounded hover:bg-green-600"
-          onClick={() =>
-            removeOrder(props.order.order_id, "departed", selectedDeliveryBoy)
-          }
-        >
-          Out for Delivery
-        </button>
-      </div>
     </div>
   );
 };
