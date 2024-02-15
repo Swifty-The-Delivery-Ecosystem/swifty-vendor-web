@@ -7,41 +7,38 @@ import VendorContext from "../context/vendorContext";
 const Body = () => {
   let verdorContext = useContext(VendorContext);
 
-  const fetchVendorDetails = async (vendorId, token) => {
-    const response = await fetch(
-      `https://auth-six-pi.vercel.app/api/v1/auth/vendors/${vendorId}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    if (response.ok) {
-      const result = await response.json();
-      const data = result.data.user;
-      verdorContext.setVendorData(data);
-      localStorage.setItem("vendorData", JSON.stringify(data));
-      localStorage.setItem("isVendorLogged", true);
-      verdorContext.setIsVendorLogged(true);
-    }
-  };
-
   useEffect(() => {
-    const isVendorLoggedLocal = localStorage.getItem("isVendorLogged");
-    const vendorDataLocal = localStorage.getItem("vendorData");
-    if (isVendorLoggedLocal) {
-      verdorContext.setIsVendorLogged(isVendorLoggedLocal);
+    if (localStorage.isVendorLogged && localStorage.vendorData) {
+      fetch(
+        `https://auth-six-pi.vercel.app/api/v1/auth/vendors/${localStorage.vendorData._id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.token,
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((result) => {
+          const data = result.data.user;
+          verdorContext.setVendorData(data);
+          localStorage.setItem("vendorData", JSON.stringify(data));
+          localStorage.setItem("isVendorLogged", true);
+          verdorContext.setIsVendorLogged(true);
+        })
+        .catch((error) => {
+          console.error("Error fetching orders data:", error);
+        });
     }
-    if (vendorDataLocal) {
-      verdorContext.setVendorData(JSON.parse(vendorDataLocal));
-    }
-    if (verdorContext.vendorData) {
-      fetchVendorDetails(verdorContext.vendorData._id, localStorage.token);
-    }
-  }, []);
+  }, [
+    `https://auth-six-pi.vercel.app/api/v1/auth/vendors/${localStorage.vendorData._id}`,
+  ]);
 
   // const searchCards = () => {
   //   console.log("These are the orders");

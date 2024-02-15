@@ -21,7 +21,6 @@ const DeliveryState = (props) => {
           );
 
           const data = await response.json();
-          console.log(data.deliveryPartners);
           setDelivery(data.deliveryPartners);
         } catch (error) {
           // Handle the error

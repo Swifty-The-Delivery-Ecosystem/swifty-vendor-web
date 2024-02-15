@@ -9,15 +9,18 @@ const OrderCard = () => {
   const [newOrder, setNewOrder] = useState(null);
   useEffect(() => {
     const eventSource = new EventSource(
-      `https://order-service-peach.vercel.app/api/v1/order_service/events/${
+      `http://localhost:8002/api/v1/order_service/events/${
         JSON.parse(localStorage.vendorData)["_id"]
       }`
     );
 
     eventSource.onmessage = (event) => {
-      const order = JSON.parse(event.data);
-      console.log(order, "order");
-      orderContext.setOrders((prevOrders) => [...prevOrders, order]);
+      console.log(event);
+      if (event.data !== "dummy") {
+        const order = JSON.parse(event.data);
+        console.log(order, "order");
+        orderContext.setOrders((prevOrders) => [...prevOrders, order]);
+      }
     };
 
     return () => {
@@ -47,7 +50,6 @@ const OrderCard = () => {
           return response.json();
         })
         .then((result) => {
-          console.log("result", result);
           if (Array.isArray(result)) {
             if (result !== orderContext.orders) {
               orderContext.setOrders(result);
