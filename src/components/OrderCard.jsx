@@ -109,7 +109,7 @@ const OrderCard = () => {
   //   }
   // }, 3000);
   useEffect(() => {
-    const newSocket = io.connect("http://localhost:8002");
+    const newSocket = io.connect("https://order-service-peach.vercel.app");
     setSocket(newSocket);
 
     return () => newSocket.close();
